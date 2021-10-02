@@ -1,11 +1,12 @@
 import InteractionArea from 'InteractionArea';
+import PotionTypes from 'PotionTypes';
 
 cc.Class({
     extends: InteractionArea,
 
     properties: {
-        potionPrefab: { default: null, type: cc.Prefab },
-        hasPotions: { default: false, visible: false }
+        potionType: { default: PotionTypes.None, type: PotionTypes },
+        _hasPotions: { default: false, serializable: false }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -13,14 +14,14 @@ cc.Class({
     // onLoad () {},
 
     start () {
-        this.hasPotions = this.potionPrefab !== null;
+        this._hasPotions = this.potionType !== PotionTypes.None;
     },
 
     // update (dt) {},
 
     interact(initiator) {
-        if (this.hasPotions && !initiator.potion) {
-            initiator.potion = cc.instantiate(this.potionPrefab);
+        if (this._hasPotions && !initiator.hasPotion()) {
+            initiator.setPotionType(this.potionType);
             initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
         }
     }

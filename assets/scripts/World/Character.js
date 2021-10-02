@@ -2,6 +2,7 @@ import GameEvent from 'GameEvent';
 import CollisionGroups from 'CollisionGroups';
 import InteractionArea from 'InteractionArea';
 import Potion from 'Potion';
+import PotionTypes from 'PotionTypes';
 
 const PlayerInputsHelper = cc.Class({
 	name: 'PlayerInputsHelper',
@@ -34,31 +35,12 @@ cc.Class({
 			default: cc.Vec2.ZERO,
             visible() { return this.interactionMark !== null }
 		},
-		potionSlot: {
-			default: null,
-			type: cc.Node
-		},
 
 
 		inputs: { 
             default() { return new PlayerInputsHelper() }, 
             type: PlayerInputsHelper, 
             visible: false 
-        },
-		potion: { 
-            default: null, 
-            visible: false, 
-            notify() {
-                if (this.potion) {
-                    this.potion.getComponent(Potion).holder = this;
-                    this.potion.setParent(this.potionSlot);
-                    this._joint.connectedBody = this.potion.getComponent(cc.RigidBody);
-                    this._joint.apply();
-                } else {
-                    this._joint.connectedBody = null;
-                    this._joint.apply();
-                }
-            } 
         },
 		interactionAreas: { 
             default: [], 
@@ -71,6 +53,7 @@ cc.Class({
 		_body: { default: null, serializable: false },
 		_joint: { default: null, serializable: false },
 		_animation: { default: null, serializable: false },
+		_potion: { default: null, serializable: false },
 
 		_isPinned: {default: false, serializable: false},
 		_isPaused: {default: false, serializable: false},
@@ -90,12 +73,19 @@ cc.Class({
         this._lastMousePosition = cc.Vec2.ZERO;
 
 		this._body = this.getComponentInChildren(cc.RigidBody);
+        this._joint = this.getComponentInChildren(cc.Joint);
+		this._animation = this.getComponentInChildren(cc.Animation);
+		this._potion = this.getComponentInChildren(Potion);
+
         if (this._body) {
             this._body.onBeginContact = (c, s, o) => { this.onBeginContact(c, s, o) };
             this._body.onEndContact = (c, s, o) => { this.onEndContact(c, s, o) };
         }
-        this._joint = this.getComponentInChildren(cc.Joint);
-		this._animation = this.getComponentInChildren(cc.Animation);
+
+        if (this._potion) {
+            this._potion.holder = this;
+        }
+
 		this._handleSubscription(true); 
 	},
 
@@ -122,6 +112,14 @@ cc.Class({
             }
 		}
 	},
+
+    hasPotion() {
+        return this._potion.type !== PotionTypes.None;
+    },
+
+    setPotionType(potionType) {
+        this._potion.type = potionType;
+    },
 
 	_handleSubscription(isOn) {
 		const func = isOn ? 'on' : 'off';
@@ -257,14 +255,13 @@ cc.Class({
 		}
 	},
 
-
 	onBeginContact(contact, self, other) {
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){
 			case CollisionGroups.Default: {
 				if (self.tag === 1) {
                     const interact = other.node.getComponent(InteractionArea);
-                    if (!this.interactionAreas.includes(interact) && !this.potion) {
+                    if (!this.interactionAreas.includes(interact) && !this.hasPotion()) {
                         this.interactionAreas = this.interactionAreas.concat(interact);
                     }
 				}
@@ -272,7 +269,6 @@ cc.Class({
 			} break;
 		}
 	},
-
 	onEndContact(contact, self, other) {
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){

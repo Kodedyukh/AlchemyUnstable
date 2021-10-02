@@ -680,10 +680,7 @@
       "__id__": 12
     },
     "_enabled": true,
-    "potionPrefab": {
-      "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
-    },
-    "hasPotions": false,
+    "potionType": 1,
     "_id": "04pjh6uK1HsrufLZHXWR+v"
   },
   {
@@ -1186,16 +1183,16 @@
         "__id__": 30
       },
       {
-        "__id__": 41
+        "__id__": 38
       },
       {
-        "__id__": 38
+        "__id__": 46
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 43
+        "__id__": 48
       }
     ],
     "_prefab": null,
@@ -1535,32 +1532,38 @@
     },
     "_angularVelocity": 0,
     "_fixedRotation": false,
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
-    "_id": "c8HGpDHDdHWLhyA/O43SFO"
+    "_id": "d66rsRIypFiYLAsd77mU7g"
   },
   {
     "__type__": "cc.Node",
-    "_name": "PotionSlot",
+    "_name": "Potion",
     "_objFlags": 0,
     "_parent": {
       "__id__": 29
     },
-    "_children": [],
+    "_children": [
+      {
+        "__id__": 39
+      }
+    ],
     "_active": true,
     "_components": [
+      {
+        "__id__": 42
+      },
       {
         "__id__": 37
       },
       {
-        "__id__": 39
-      },
-      {
-        "__id__": 40
+        "__id__": 44
       }
     ],
-    "_prefab": null,
+    "_prefab": {
+      "__id__": 45
+    },
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -1571,8 +1574,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 26,
-      "height": 26
+      "width": 0,
+      "height": 0
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1583,7 +1586,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        30,
+        60,
         0,
         0,
         0,
@@ -1604,38 +1607,80 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
-    "_id": "c507GfiMFNIYeJTUktRWsP"
+    "_groupIndex": 5,
+    "groupIndex": 5,
+    "_id": "52XToNfzRIwIKJGuSYaFRD"
   },
   {
-    "__type__": "cc.PhysicsCircleCollider",
-    "_name": "",
+    "__type__": "cc.Node",
+    "_name": "Render",
     "_objFlags": 0,
-    "node": {
+    "_parent": {
       "__id__": 38
     },
-    "_enabled": true,
-    "tag": 0,
-    "_density": 0.1,
-    "_sensor": false,
-    "_friction": 0.2,
-    "_restitution": 0,
-    "body": null,
-    "_offset": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 40
+      }
+    ],
+    "_prefab": {
+      "__id__": 41
     },
-    "_radius": 30,
-    "_id": "34BtMpl0BJU6tuyzQFkQwn"
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 62,
+      "height": 62
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0.8,
+        0.8,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 5,
+    "groupIndex": 5,
+    "_id": "59UZX55TlEspJEg8x3pdpe"
   },
   {
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 38
+      "__id__": 39
     },
     "_enabled": true,
     "_materials": [
@@ -1645,9 +1690,7 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "3fceb360-1548-4684-8a8f-062e8b15708f"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -1660,7 +1703,75 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": "56C0XxRC1JTJy0U4GE0Sl1"
+    "_id": "77Q/y3ImJDoJ2tGUWHu94o"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 38
+    },
+    "asset": {
+      "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
+    },
+    "fileId": "69XwiNi85FsLd9BSSeME5s",
+    "sync": false
+  },
+  {
+    "__type__": "b4c68ttKs1IQ5gqndQ2h9pd",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 38
+    },
+    "_enabled": true,
+    "renders": [
+      {
+        "__id__": 43
+      }
+    ],
+    "holder": null,
+    "_N$type": 0,
+    "_id": "20rQwTjT9DxpPn/uS/Amur"
+  },
+  {
+    "__type__": "PotionTypeRender",
+    "type": 1,
+    "spriteFrame": {
+      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+    }
+  },
+  {
+    "__type__": "cc.PhysicsCircleCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 38
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_density": 1,
+    "_sensor": true,
+    "_friction": 0.2,
+    "_restitution": 0,
+    "body": null,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_radius": 25,
+    "_id": "8dz39cPpFBEL6xkupC3FJU"
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 38
+    },
+    "asset": {
+      "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
+    },
+    "fileId": "",
+    "sync": false
   },
   {
     "__type__": "cc.Node",
@@ -1673,7 +1784,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 42
+        "__id__": 47
       }
     ],
     "_prefab": null,
@@ -1729,7 +1840,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 41
+      "__id__": 46
     },
     "_enabled": true,
     "_materials": [
@@ -1766,20 +1877,16 @@
     "_enabled": true,
     "runVelocity": 200,
     "interactionMark": {
-      "__id__": 41
+      "__id__": 46
     },
     "interactionMarkOffset": {
       "__type__": "cc.Vec2",
       "x": 0,
       "y": 75
     },
-    "potionSlot": {
-      "__id__": 38
-    },
     "inputs": {
-      "__id__": 44
+      "__id__": 49
     },
-    "_N$potion": null,
     "_N$interactionAreas": [],
     "_id": "d7IE5uSQlJqJcuANLoNFOP"
   },
