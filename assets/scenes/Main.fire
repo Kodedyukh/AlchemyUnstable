@@ -129,14 +129,15 @@
     "_id": "d6NmRJA4BEAaI6+GHxZP+0"
   },
   {
-    "__type__": "8a35ckdutlP07pcs1MD+26b",
+    "__type__": "dfc41DDMRJJfY0ufnG+cgzj",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 2
     },
     "_enabled": true,
-    "_id": "e3onIReX1OfqDmhU3CyeoR"
+    "debugMode": false,
+    "_id": "7c4v6y+0pBgaLdf1OVIlzB"
   },
   {
     "__type__": "cc.Node",

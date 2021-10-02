@@ -158,7 +158,7 @@ cc.Class({
 
         this._realAngle = angle;
 
-        this._body.angularVelocity = 1;
+        this._body.angularVelocity = .001;
         this._body.node.angle = this._turns * 360 + angle;
         this._body.angularVelocity = 0;
     },
