@@ -129,8 +129,8 @@
         0,
         0,
         1,
-        0.8,
-        0.8,
+        0.5,
+        0.5,
         1
       ]
     },
@@ -234,7 +234,7 @@
     },
     "_enabled": true,
     "tag": 0,
-    "_density": 1,
+    "_density": 0.1,
     "_sensor": true,
     "_friction": 0.2,
     "_restitution": 0,
@@ -244,7 +244,7 @@
       "x": 0,
       "y": 0
     },
-    "_radius": 25,
+    "_radius": 15,
     "_id": ""
   },
   {
