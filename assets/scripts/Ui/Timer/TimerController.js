@@ -7,7 +7,7 @@ cc.Class({
         _render: { default: null, serializable: false }
     },
 
-    onEnable() {
+    init() {
         this._render = this.getComponentInChildren(cc.Sprite);
     
         this.node.active = false;
