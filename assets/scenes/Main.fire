@@ -217,11 +217,13 @@
     "leftButton": "a",
     "rightButton": "d",
     "useButton": "e",
+    "runButton": "shift",
     "_topButtonPressed": false,
     "_downButtonPressed": false,
     "_leftButtonPressed": false,
     "_rightButtonPressed": false,
     "_useButtonPressed": false,
+    "_runButtonPressed": false,
     "_id": "63tBRAmQRKM50CjkoPM5tK"
   },
   {
@@ -6307,7 +6309,8 @@
       "__id__": 122
     },
     "_enabled": true,
-    "runVelocity": 100,
+    "runVelocity": 200,
+    "walkVelocity": 100,
     "interactionMark": {
       "__id__": 140
     },

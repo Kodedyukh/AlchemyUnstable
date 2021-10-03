@@ -27,6 +27,7 @@ cc.Class({
 
 	properties: {
 		runVelocity: 100,
+		walkVelocity: 100,
 		interactionMark: {
 			default: null,
 			type: cc.Node
@@ -64,7 +65,9 @@ cc.Class({
 		_realAngle: { default: 0, serializable: false },
 		_turns: { default: 0, serializable: false },
 
-		_isSleepingPlayer: { default: false, serializable: false}
+		_isSleepingPlayer: { default: false, serializable: false},
+
+		_isRunning: {default: false, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -97,10 +100,10 @@ cc.Class({
 		if (!this._isPaused && this._body) {
 			const velocity = cc.Vec2.ZERO;
 
-			if (this.inputs.left) velocity.x -= this.runVelocity;
-			if (this.inputs.right) velocity.x += this.runVelocity;
-			if (this.inputs.top) velocity.y += this.runVelocity;
-			if (this.inputs.down) velocity.y -= this.runVelocity;
+			if (this.inputs.left) velocity.x -= this._isRunning? this.runVelocity: this.walkVelocity;
+			if (this.inputs.right) velocity.x += this._isRunning? this.runVelocity: this.walkVelocity;
+			if (this.inputs.top) velocity.y += this._isRunning? this.runVelocity: this.walkVelocity;
+			if (this.inputs.down) velocity.y -= this._isRunning? this.runVelocity: this.walkVelocity;
 
 			this._body.linearVelocity = velocity;
             this._countAngle();
@@ -138,6 +141,9 @@ cc.Class({
 
 		cc.systemEvent[func](GameEvent.USE_BUTTON_PRESSED, this.onUseButtonPressed, this);
 		cc.systemEvent[func](GameEvent.USE_BUTTON_RELEASED, this.onUseButtonReleased, this);
+
+		cc.systemEvent[func](GameEvent.RUN_BUTTON_PRESSED, this.onRunButtonPressed, this);
+		cc.systemEvent[func](GameEvent.RUN_BUTTON_RELEASED, this.onRunButtonReleased, this);
 
 		cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
 
@@ -239,6 +245,14 @@ cc.Class({
 		if (!this._isSleepingPlayer){
 			this.inputs.use = false;
 		}
+	},
+
+	onRunButtonPressed() {
+		this._isRunning = true;
+	},
+
+	onRunButtonReleased() {
+		this._isRunning = false;
 	},
 
     onMouseMove(position) {

@@ -9,12 +9,14 @@ cc.Class({
         leftButton: '',
         rightButton: '',
         useButton: '',
+        runButton: '',
 
         _topButtonPressed: false,
         _downButtonPressed: false,
         _leftButtonPressed: false,
         _rightButtonPressed: false,
-        _useButtonPressed: false
+        _useButtonPressed: false,
+        _runButtonPressed: false
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -79,6 +81,14 @@ cc.Class({
                 }
                 
                 break;
+
+            case cc.macro.KEY[this.runButton]:
+                if (!this._runButtonPressed) {
+                    cc.systemEvent.emit(GameEvent.RUN_BUTTON_PRESSED);
+                    this._runButtonPressed = true;
+                }
+
+                break;
         }
     },
 
@@ -124,6 +134,13 @@ cc.Class({
                 cc.systemEvent.emit(GameEvent.USE_BUTTON_RELEASED);
                 if (this._useButtonPressed) {
                     this._useButtonPressed = false;
+                }
+                break;
+
+            case cc.macro.KEY[this.runButton]:
+                cc.systemEvent.emit(GameEvent.RUN_BUTTON_RELEASED);
+                if (this._runButtonPressed) {
+                    this._runButtonPressed = false;
                 }
                 break;
         }
