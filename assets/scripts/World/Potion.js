@@ -108,6 +108,7 @@ cc.Class({
 			case CollisionGroups.Alchemist: 
 			case CollisionGroups.PotionFactory: 
 				break;
+			case CollisionGroups.Cat:
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
 					this._launchExplodeTimer();
@@ -127,6 +128,7 @@ cc.Class({
 				this.holder.interactionAreas = this.holder.interactionAreas.filter(a => a !== interact);
 			} break;
 
+			case CollisionGroups.Cat:
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
 					this._stopExplodeTimer();
