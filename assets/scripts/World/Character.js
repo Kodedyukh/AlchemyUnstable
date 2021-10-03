@@ -28,6 +28,9 @@ cc.Class({
 	properties: {
 		runVelocity: 100,
 		walkVelocity: 100,
+		rotationVelocity: 0,
+		potionSpeed: 10,
+		potionDistanceMax: 300,
 		interactionMark: {
 			default: null,
 			type: cc.Node
@@ -67,7 +70,9 @@ cc.Class({
 
 		_isSleepingPlayer: { default: false, serializable: false},
 
-		_isRunning: {default: false, serializable: false}
+		_isRunning: {default: false, serializable: false},
+		_rotationDirection: {default: 0, serializable: false},
+		_potionVelocity: {default: 0, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -109,6 +114,14 @@ cc.Class({
             this._countAngle();
             //this._setAnimation();
 
+            if (this._potionVelocity !== 0 && this._potion.type !== PotionTypes.None) {
+            	const currentDistance = this._joint.connectedAnchor.x;
+            	const newDistance = currentDistance + dt * this._potionVelocity;
+
+            	this._joint.connectedAnchor = cc.v2(Math.max(Math.min(-20, newDistance), - this.potionDistanceMax), 0);
+            	this._joint.apply();
+            }
+
             if (this.interactionMark) {
                 const bodyPosition = this._body.node.position;
                 this.interactionMark.setPosition(bodyPosition.add(this.interactionMarkOffset));
@@ -122,6 +135,8 @@ cc.Class({
 
     setPotionType(potionType) {
         this._potion.type = potionType;
+        this._joint.connectedAnchor = cc.v2(-20, 0);
+        this._joint.apply();
     },
 
 	_handleSubscription(isOn) {
@@ -145,26 +160,39 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.RUN_BUTTON_PRESSED, this.onRunButtonPressed, this);
 		cc.systemEvent[func](GameEvent.RUN_BUTTON_RELEASED, this.onRunButtonReleased, this);
 
+		cc.systemEvent[func](GameEvent.ROTATE_BUTTON_PRESSED, this.onRotateButtonPressed, this);
+		cc.systemEvent[func](GameEvent.ROTATE_BUTTON_RELEASED, this.onRotateButtonReleased, this);
+
+		cc.systemEvent[func](GameEvent.PULL_BUTTON_PRESSED, this.onPullButtonPressed, this);
+		cc.systemEvent[func](GameEvent.PULL_BUTTON_RELEASED, this.onPullButtonReleased, this);
+
+		cc.systemEvent[func](GameEvent.PUSH_BUTTON_PRESSED, this.onPushButtonPressed, this);
+		cc.systemEvent[func](GameEvent.PUSH_BUTTON_RELEASED, this.onPushButtonReleased, this);
+
 		cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
 
 		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
 	},
 
     _countAngle() {
-        const mousePosition = cc.Camera.main.getScreenToWorldPoint(this._lastMousePosition);
-        const selfPosition = this.node.convertToWorldSpaceAR(this._body.node);
+    	// for mouse
+        // const mousePosition = cc.Camera.main.getScreenToWorldPoint(this._lastMousePosition);
+        // const selfPosition = this.node.convertToWorldSpaceAR(this._body.node);
 
-        let angle = Math.atan2(mousePosition.y - selfPosition.y, mousePosition.x - selfPosition.x) * 180 / Math.PI;
-        if (mousePosition.y < selfPosition.y) angle = 360 + angle;
+        // let angle = Math.atan2(mousePosition.y - selfPosition.y, mousePosition.x - selfPosition.x) * 180 / Math.PI;
+        // if (mousePosition.y < selfPosition.y) angle = 360 + angle;
 
-        if (angle < 90 && this._realAngle > 300) this._turns++;
-        if (angle > 300 && this._realAngle < 90) this._turns--;
+        // if (angle < 90 && this._realAngle > 300) this._turns++;
+        // if (angle > 300 && this._realAngle < 90) this._turns--;
 
-        this._realAngle = angle;
+        // this._realAngle = angle;
 
-        this._body.angularVelocity = .001;
-        this._body.node.angle = this._turns * 360 + angle;
-        this._body.angularVelocity = 0;
+        // this._body.angularVelocity = .001;
+        // this._body.node.angle = this._turns * 360 + angle;
+        // this._body.angularVelocity = 0;
+
+        // for arrows
+        this._body.angularVelocity = this.rotationVelocity * this._rotationDirection;
     },
 
     _setAnimation() {
@@ -293,5 +321,29 @@ cc.Class({
 				}
 			} break;
 		}
+	},
+
+	onRotateButtonPressed(direction) {
+		this._rotationDirection += direction;
+	},
+
+	onRotateButtonReleased(direction) {
+		this._rotationDirection -= direction;
+	},
+
+	onPullButtonPressed() {
+		this._potionVelocity = this.potionSpeed;
+	},
+
+	onPullButtonReleased() {
+		this._potionVelocity = 0;
+	},
+
+	onPushButtonPressed() {
+		this._potionVelocity = - this.potionSpeed;
+	},
+
+	onPushButtonReleased() {
+		this._potionVelocity = 0;
 	}
 });

@@ -218,12 +218,20 @@
     "rightButton": "d",
     "useButton": "e",
     "runButton": "shift",
+    "rotateClockwiseButton": "right",
+    "rotateCounterclockButton": "left",
+    "pushPotionButton": "up",
+    "pullPotionButton": "down",
     "_topButtonPressed": false,
     "_downButtonPressed": false,
     "_leftButtonPressed": false,
     "_rightButtonPressed": false,
     "_useButtonPressed": false,
     "_runButtonPressed": false,
+    "_rotateClockwisePressed": false,
+    "_rotateCounterClockPressed": false,
+    "_pushPotionPressed": false,
+    "_pullPotionPressed": false,
     "_id": "63tBRAmQRKM50CjkoPM5tK"
   },
   {
@@ -5900,12 +5908,12 @@
     "_enabled": true,
     "anchor": {
       "__type__": "cc.Vec2",
-      "x": 10,
+      "x": 0,
       "y": 0
     },
     "connectedAnchor": {
       "__type__": "cc.Vec2",
-      "x": -10,
+      "x": -20,
       "y": 0
     },
     "connectedBody": {
@@ -6311,6 +6319,9 @@
     "_enabled": true,
     "runVelocity": 200,
     "walkVelocity": 100,
+    "rotationVelocity": 200,
+    "potionSpeed": 25,
+    "potionDistanceMax": 300,
     "interactionMark": {
       "__id__": 140
     },
