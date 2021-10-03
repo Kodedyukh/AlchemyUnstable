@@ -287,6 +287,10 @@ cc.Class({
 	onUseButtonReleased() {
 		if (!this._isSleepingPlayer){
 			this.inputs.use = false;
+
+			if (this.interactionAreas.length) {
+				this.interactionAreas[0].stopInteract(this);
+			}
 		}
 	},
 

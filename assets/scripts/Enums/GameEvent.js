@@ -37,5 +37,9 @@ export default cc.Enum({
     //Orders
     GET_CURRENT_ORDER: 3000,
     GET_CURRENT_ORDER_INDEX: 3001,
-    ORDER_COMPLITED: 3002
+    ORDER_COMPLITED: 3002,
+
+    //Bubble
+    SHOW_BUBBLE: 4000,
+    HIDE_BUBBLE: 4001
 });

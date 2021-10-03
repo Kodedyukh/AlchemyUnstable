@@ -476,6 +476,9 @@
       },
       {
         "__id__": 177
+      },
+      {
+        "__id__": 219
       }
     ],
     "_active": true,
@@ -5878,8 +5881,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -224.301,
-        -141.366,
+        -224,
+        -141,
         0,
         0,
         0,
@@ -8642,5 +8645,139 @@
     "top": false,
     "down": false,
     "use": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Bubble",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 11
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 220
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        -224,
+        -104.008,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "77RdTSW8FJBIw9vOLAWugT"
+  },
+  {
+    "__type__": "e51ffEznVFFC6JQEuyoCP+M",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 219
+    },
+    "_enabled": true,
+    "potions": [
+      {
+        "__id__": 221
+      },
+      {
+        "__id__": 222
+      },
+      {
+        "__id__": 223
+      },
+      {
+        "__id__": 224
+      },
+      {
+        "__id__": 225
+      }
+    ],
+    "offset": {
+      "__type__": "cc.Vec2",
+      "x": 20,
+      "y": 0
+    },
+    "startPosition": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_id": "dcl7S/zKpBqLgbiWjmKWMt"
+  },
+  {
+    "__type__": "PotionRenderHelper",
+    "type": 1,
+    "spriteFrame": {
+      "__uuid__": "7c698153-0a54-4627-a9bf-8eea89ea550f"
+    }
+  },
+  {
+    "__type__": "PotionRenderHelper",
+    "type": 2,
+    "spriteFrame": {
+      "__uuid__": "5c434c7d-a508-4475-aad1-18a5c2144116"
+    }
+  },
+  {
+    "__type__": "PotionRenderHelper",
+    "type": 3,
+    "spriteFrame": {
+      "__uuid__": "9dad8a93-1b26-4aca-9238-58230c49aaaf"
+    }
+  },
+  {
+    "__type__": "PotionRenderHelper",
+    "type": 4,
+    "spriteFrame": {
+      "__uuid__": "4025619d-a3f6-4d2d-bf82-b4bc183818a5"
+    }
+  },
+  {
+    "__type__": "PotionRenderHelper",
+    "type": 6,
+    "spriteFrame": {
+      "__uuid__": "4c390f3f-8d61-4a38-a89e-58907e91868a"
+    }
   }
 ]

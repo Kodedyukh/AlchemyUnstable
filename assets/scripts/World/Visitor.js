@@ -29,9 +29,13 @@ cc.Class({
             cc.systemEvent.emit(GameEvent.ORDER_COMPLITED);
             this._escape();
         } else {
-            cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingredients) => {
-                cc.log(ingredients);
-            });
+            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE);
+        }
+    },
+
+    stopInteract(initiator) {
+        if (initiator.getPotionType() !== PotionTypes.Result) {
+            cc.systemEvent.emit(GameEvent.HIDE_BUBBLE);
         }
     },
 

@@ -13,4 +13,8 @@ cc.Class({
     },
 
     // update (dt) {},
+
+    interact(initiator) {},
+
+    stopInteract(initiator) {}
 });
