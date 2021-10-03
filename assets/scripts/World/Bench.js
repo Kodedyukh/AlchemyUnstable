@@ -39,12 +39,19 @@ cc.Class({
 
         _currentOrder: { default: 0, serializable: false },
         _isUnstable: { default: false, serializable: false },
-        _unstableTimer: { default: 0, serializable: false }
+        _unstableTimer: { default: 0, serializable: false },
+        _particleSystem: { default: null, serializable: false },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this._particleSystem = this.getComponentInChildren(cc.ParticleSystem);
+        if (this._particleSystem) {
+            //this._particleSystem.resetSystem();
+            cc.log('reset particle system')
+        }
+
         this._handleSubscription(true);
         this.node.active = this.orders.length > 0;
     },
@@ -69,7 +76,7 @@ cc.Class({
     },
 
     interact(initiator) {
-        const deliveredPotionType = initiator._potion.type;
+        const deliveredPotionType = initiator.getPotionType();
         if (!this._isUnstable) {
             const targetIngredient = this.orders[this._currentOrder].ingridients.find(i => !i._isDelivered);
             if (deliveredPotionType !== targetIngredient.potionType) {

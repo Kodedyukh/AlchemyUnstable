@@ -3,7 +3,8 @@ export default cc.Enum({
     Wall: "wall",
     Alchemist: "alchemist",
     Visitor: "visitor",
-    Potion: "posion",
+    Potion: "potion",
+    PotionFactory: "potionFactory",
     Bench: "bench",
     Cat: "cat"
 });

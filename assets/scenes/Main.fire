@@ -217,9 +217,9 @@
     "leftButton": "a",
     "rightButton": "d",
     "useButton": "e",
-    "runButton": "",
-    "rotateClockwiseButton": "",
-    "rotateCounterclockButton": "",
+    "runButton": "shift",
+    "rotateClockwiseButton": "right",
+    "rotateCounterclockButton": "left",
     "pushPotionButton": "up",
     "pullPotionButton": "down",
     "_topButtonPressed": false,
@@ -466,7 +466,7 @@
         "__id__": 122
       },
       {
-        "__id__": 140
+        "__id__": 141
       }
     ],
     "_active": true,
@@ -4316,8 +4316,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 8,
+    "groupIndex": 8,
     "_id": "99eK4mTXhFXaFAy8bE3W6s"
   },
   {
@@ -4540,8 +4540,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 8,
+    "groupIndex": 8,
     "_id": "9eG6zatCpKapp8FMlX/En4"
   },
   {
@@ -4764,8 +4764,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 8,
+    "groupIndex": 8,
     "_id": "64//VrieNNRI0gFrKEsSWO"
   },
   {
@@ -4988,8 +4988,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 8,
+    "groupIndex": 8,
     "_id": "de+zomEs9M8ZAKM9gt+dtK"
   },
   {
@@ -5212,8 +5212,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 8,
+    "groupIndex": 8,
     "_id": "52lDaPm+BDuo4zHK1OYdX9"
   },
   {
@@ -5436,8 +5436,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 8,
+    "groupIndex": 8,
     "_id": "adFo41xfRKXIGbz/p/bO4H"
   },
   {
@@ -5614,6 +5614,9 @@
       },
       {
         "__id__": 139
+      },
+      {
+        "__id__": 140
       }
     ],
     "_prefab": null,
@@ -5627,8 +5630,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 100,
+      "height": 100
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -5907,6 +5910,26 @@
     "_id": "39dvBQXvtEWL8tAQAb1xsw"
   },
   {
+    "__type__": "cc.Mask",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 122
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_spriteFrame": null,
+    "_type": 1,
+    "_segments": 64,
+    "_N$alphaThreshold": 0,
+    "_N$inverted": false,
+    "_id": "aclOA6dilKqaxe8e0sePKH"
+  },
+  {
     "__type__": "cc.Node",
     "_name": "Character",
     "_objFlags": 0,
@@ -5915,19 +5938,19 @@
     },
     "_children": [
       {
-        "__id__": 141
+        "__id__": 142
       },
       {
-        "__id__": 149
+        "__id__": 150
       },
       {
-        "__id__": 163
+        "__id__": 164
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 165
+        "__id__": 166
       }
     ],
     "_prefab": null,
@@ -5983,18 +6006,15 @@
     "_name": "Body",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 140
+      "__id__": 141
     },
     "_children": [
       {
-        "__id__": 142
+        "__id__": 143
       }
     ],
     "_active": true,
     "_components": [
-      {
-        "__id__": 144
-      },
       {
         "__id__": 145
       },
@@ -6003,6 +6023,9 @@
       },
       {
         "__id__": 147
+      },
+      {
+        "__id__": 148
       }
     ],
     "_prefab": null,
@@ -6058,13 +6081,13 @@
     "_name": "Render",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 141
+      "__id__": 142
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 143
+        "__id__": 144
       }
     ],
     "_prefab": null,
@@ -6078,8 +6101,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 62,
-      "height": 62
+      "width": 102,
+      "height": 73
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -6120,7 +6143,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 142
+      "__id__": 143
     },
     "_enabled": true,
     "_materials": [
@@ -6131,7 +6154,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "73b781ae-382b-4a7c-917d-1fdd19f5c50d"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -6152,7 +6175,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 141
+      "__id__": 142
     },
     "_enabled": true,
     "_type": 2,
@@ -6177,7 +6200,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 141
+      "__id__": 142
     },
     "_enabled": true,
     "tag": 0,
@@ -6199,7 +6222,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 141
+      "__id__": 142
     },
     "_enabled": true,
     "tag": 1,
@@ -6221,7 +6244,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 141
+      "__id__": 142
     },
     "_enabled": true,
     "anchor": {
@@ -6235,7 +6258,7 @@
       "y": 0
     },
     "connectedBody": {
-      "__id__": 148
+      "__id__": 149
     },
     "collideConnected": false,
     "_maxMotorTorque": 0,
@@ -6252,7 +6275,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 149
+      "__id__": 150
     },
     "_enabled": true,
     "_type": 2,
@@ -6277,30 +6300,30 @@
     "_name": "Potion",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 140
+      "__id__": 141
     },
     "_children": [
       {
-        "__id__": 150
+        "__id__": 151
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 153
+        "__id__": 154
       },
       {
-        "__id__": 148
-      },
-      {
-        "__id__": 160
+        "__id__": 149
       },
       {
         "__id__": 161
+      },
+      {
+        "__id__": 162
       }
     ],
     "_prefab": {
-      "__id__": 162
+      "__id__": 163
     },
     "_opacity": 255,
     "_color": {
@@ -6354,30 +6377,30 @@
     "_name": "Render",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 149
+      "__id__": 150
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 151
+        "__id__": 152
       }
     ],
     "_prefab": {
-      "__id__": 152
+      "__id__": 153
     },
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 40,
+      "r": 255,
       "g": 255,
-      "b": 40,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 62,
-      "height": 62
+      "width": 54,
+      "height": 59
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -6418,7 +6441,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 150
+      "__id__": 151
     },
     "_enabled": true,
     "_materials": [
@@ -6446,7 +6469,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 149
+      "__id__": 150
     },
     "asset": {
       "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
@@ -6459,16 +6482,13 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 149
+      "__id__": 150
     },
     "_enabled": true,
     "renderNode": {
-      "__id__": 150
+      "__id__": 151
     },
     "renders": [
-      {
-        "__id__": 154
-      },
       {
         "__id__": 155
       },
@@ -6483,6 +6503,9 @@
       },
       {
         "__id__": 159
+      },
+      {
+        "__id__": 160
       }
     ],
     "holder": null,
@@ -6493,42 +6516,42 @@
     "__type__": "PotionTypeRender",
     "type": 1,
     "spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "7c698153-0a54-4627-a9bf-8eea89ea550f"
     }
   },
   {
     "__type__": "PotionTypeRender",
     "type": 2,
     "spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "5c434c7d-a508-4475-aad1-18a5c2144116"
     }
   },
   {
     "__type__": "PotionTypeRender",
     "type": 3,
     "spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "9dad8a93-1b26-4aca-9238-58230c49aaaf"
     }
   },
   {
     "__type__": "PotionTypeRender",
     "type": 4,
     "spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "4025619d-a3f6-4d2d-bf82-b4bc183818a5"
     }
   },
   {
     "__type__": "PotionTypeRender",
     "type": 6,
     "spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "4c390f3f-8d61-4a38-a89e-58907e91868a"
     }
   },
   {
     "__type__": "PotionTypeRender",
     "type": 1000,
     "spriteFrame": {
-      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+      "__uuid__": "e34a06fa-e999-40fe-a250-16a89e5ba5a5"
     }
   },
   {
@@ -6536,7 +6559,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 149
+      "__id__": 150
     },
     "_enabled": true,
     "tag": 0,
@@ -6558,7 +6581,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 149
+      "__id__": 150
     },
     "_enabled": true,
     "_defaultClip": {
@@ -6575,7 +6598,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 149
+      "__id__": 150
     },
     "asset": {
       "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
@@ -6588,13 +6611,13 @@
     "_name": "InteractionMark",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 140
+      "__id__": 141
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 164
+        "__id__": 165
       }
     ],
     "_prefab": null,
@@ -6650,7 +6673,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 163
+      "__id__": 164
     },
     "_enabled": true,
     "_materials": [
@@ -6682,16 +6705,16 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 140
+      "__id__": 141
     },
     "_enabled": true,
-    "runVelocity": 100,
+    "runVelocity": 200,
     "walkVelocity": 100,
-    "rotationVelocity": 0,
-    "potionSpeed": 10,
+    "rotationVelocity": 200,
+    "potionSpeed": 25,
     "potionDistanceMax": 300,
     "interactionMark": {
-      "__id__": 163
+      "__id__": 164
     },
     "interactionMarkOffset": {
       "__type__": "cc.Vec2",
@@ -6699,7 +6722,7 @@
       "y": 30
     },
     "inputs": {
-      "__id__": 166
+      "__id__": 167
     },
     "_N$interactionAreas": [],
     "_id": "65pYcSG9xHEpfESLj53jI6"

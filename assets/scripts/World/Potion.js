@@ -64,10 +64,10 @@ cc.Class({
 	},
 
 	start () {
-
 	},
 
-	// update (dt) {},
+	update (dt) {
+	},
 
 	shakeEnd() {
 		this._destroy();
@@ -106,7 +106,7 @@ cc.Class({
 				}
 			} break;
 			case CollisionGroups.Alchemist: 
-			case CollisionGroups.Default: 
+			case CollisionGroups.PotionFactory: 
 				break;
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {

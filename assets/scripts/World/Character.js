@@ -133,6 +133,10 @@ cc.Class({
         return this._potion.type !== PotionTypes.None;
     },
 
+    getPotionType() {
+        return this._potion.type;
+    },
+
     setPotionType(potionType) {
         this._potion.type = potionType;
         this._joint.connectedAnchor = cc.v2(-20, 0);
@@ -299,8 +303,9 @@ cc.Class({
 
 	onBeginContact(contact, self, other) {
 		const otherGroupName = other.node.group;
+		cc.log(otherGroupName)
 		switch(otherGroupName){
-			case CollisionGroups.Default: {
+			case CollisionGroups.PotionFactory: {
 				if (self.tag === 1) {
                     const interact = other.node.getComponent(InteractionArea);
                     if (!this.interactionAreas.includes(interact) && !this.hasPotion()) {
@@ -314,7 +319,7 @@ cc.Class({
 	onEndContact(contact, self, other) {
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){
-			case CollisionGroups.Default: {
+			case CollisionGroups.PotionFactory: {
 				if (self.tag === 1) {
                     const interact = other.node.getComponent(InteractionArea);
                     this.interactionAreas = this.interactionAreas.filter(a => a !== interact);
