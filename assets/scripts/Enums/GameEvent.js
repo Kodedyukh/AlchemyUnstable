@@ -21,4 +21,10 @@ export default cc.Enum({
     
     //Sound
     SOUND_ACTIVE: 1500,
+
+    //Potion
+    POTION_WASTED: 2000,
+
+    //Orders
+    GET_CURRENT_ORDER:3000
 });

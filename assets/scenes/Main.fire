@@ -453,10 +453,10 @@
         "__id__": 85
       },
       {
-        "__id__": 116
+        "__id__": 122
       },
       {
-        "__id__": 122
+        "__id__": 140
       }
     ],
     "_active": true,
@@ -4183,6 +4183,9 @@
       },
       {
         "__id__": 110
+      },
+      {
+        "__id__": 116
       }
     ],
     "_active": true,
@@ -4326,8 +4329,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 0,
-      "g": 255,
-      "b": 20,
+      "g": 0,
+      "b": 0,
       "a": 255
     },
     "_contentSize": {
@@ -4409,7 +4412,7 @@
       "__id__": 86
     },
     "_enabled": true,
-    "potionType": 1,
+    "potionType": 1000,
     "_id": "e7lvimh2hKbaQKZuAf1tAu"
   },
   {
@@ -4549,9 +4552,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 255,
-      "b": 20,
+      "r": 255,
+      "g": 0,
+      "b": 0,
       "a": 255
     },
     "_contentSize": {
@@ -4857,7 +4860,7 @@
       "__id__": 98
     },
     "_enabled": true,
-    "potionType": 1,
+    "potionType": 2,
     "_id": "3fOMmkv4dJCpwvmz6nqyYy"
   },
   {
@@ -4998,8 +5001,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 0,
-      "g": 255,
-      "b": 20,
+      "g": 31,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
@@ -5081,7 +5084,7 @@
       "__id__": 104
     },
     "_enabled": true,
-    "potionType": 1,
+    "potionType": 3,
     "_id": "6eTxFvd7VBuot7xBqmIBcH"
   },
   {
@@ -5221,9 +5224,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
+      "r": 224,
       "g": 255,
-      "b": 20,
+      "b": 0,
       "a": 255
     },
     "_contentSize": {
@@ -5305,7 +5308,7 @@
       "__id__": 110
     },
     "_enabled": true,
-    "potionType": 1,
+    "potionType": 4,
     "_id": "9fMeWjWrdNoo2XEGeH/Xg3"
   },
   {
@@ -5357,10 +5360,10 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Bench",
+    "_name": "PotionFactory copy",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 11
+      "__id__": 85
     },
     "_children": [
       {
@@ -5377,6 +5380,230 @@
       },
       {
         "__id__": 121
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        352.079,
+        -160.49,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        2,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "adFo41xfRKXIGbz/p/bO4H"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Render",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 116
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 118
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 255,
+      "b": 224,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 50,
+      "height": 50
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0.8,
+        0.8,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "63czvRkblCZIfEnBENN4tM"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 117
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "3fceb360-1548-4684-8a8f-062e8b15708f"
+    },
+    "_type": 0,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": "22b0B34aVPMZGXc0YTawoK"
+  },
+  {
+    "__type__": "23f61JOYG1FMpXoE0YBDssa",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 116
+    },
+    "_enabled": true,
+    "potionType": 6,
+    "_id": "0cZiS+ek5LX7XEfAXdWloC"
+  },
+  {
+    "__type__": "cc.RigidBody",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 116
+    },
+    "_enabled": true,
+    "_type": 0,
+    "_allowSleep": true,
+    "_gravityScale": 0,
+    "_linearDamping": 0,
+    "_angularDamping": 0,
+    "_linearVelocity": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_angularVelocity": 0,
+    "_fixedRotation": false,
+    "enabledContactListener": false,
+    "bullet": false,
+    "awakeOnLoad": true,
+    "_id": "e0XfKpgIJAKIfwBEfzC/Op"
+  },
+  {
+    "__type__": "cc.PhysicsCircleCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 116
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_density": 1,
+    "_sensor": false,
+    "_friction": 0.2,
+    "_restitution": 0,
+    "body": null,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_radius": 25,
+    "_id": "13W7cEjilCS4iLsT93IxBI"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Bench",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 11
+    },
+    "_children": [
+      {
+        "__id__": 123
+      }
+    ],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 125
+      },
+      {
+        "__id__": 138
+      },
+      {
+        "__id__": 139
       }
     ],
     "_prefab": null,
@@ -5432,13 +5659,13 @@
     "_name": "Render",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 116
+      "__id__": 122
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 118
+        "__id__": 124
       }
     ],
     "_prefab": null,
@@ -5494,7 +5721,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 117
+      "__id__": 123
     },
     "_enabled": true,
     "_materials": [
@@ -5526,17 +5753,108 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 116
+      "__id__": 122
     },
     "_enabled": true,
+    "unstableDuration": 60,
+    "unstableChance": 10,
+    "orders": [
+      {
+        "__id__": 126
+      },
+      {
+        "__id__": 129
+      },
+      {
+        "__id__": 133
+      }
+    ],
     "_id": "e3bRy00gFJ6Llb0KEhBHTS"
+  },
+  {
+    "__type__": "Recipe",
+    "ingridients": [
+      {
+        "__id__": 127
+      },
+      {
+        "__id__": 128
+      }
+    ]
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 1
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 2
+  },
+  {
+    "__type__": "Recipe",
+    "ingridients": [
+      {
+        "__id__": 130
+      },
+      {
+        "__id__": 131
+      },
+      {
+        "__id__": 132
+      }
+    ]
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 2
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 3
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 6
+  },
+  {
+    "__type__": "Recipe",
+    "ingridients": [
+      {
+        "__id__": 134
+      },
+      {
+        "__id__": 135
+      },
+      {
+        "__id__": 136
+      },
+      {
+        "__id__": 137
+      }
+    ]
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 1
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 4
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 6
+  },
+  {
+    "__type__": "RecipeIngredient",
+    "potionType": 4
   },
   {
     "__type__": "cc.RigidBody",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 116
+      "__id__": 122
     },
     "_enabled": true,
     "_type": 0,
@@ -5561,7 +5879,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 116
+      "__id__": 122
     },
     "_enabled": true,
     "tag": 0,
@@ -5587,19 +5905,19 @@
     },
     "_children": [
       {
-        "__id__": 123
+        "__id__": 141
       },
       {
-        "__id__": 131
+        "__id__": 149
       },
       {
-        "__id__": 140
+        "__id__": 163
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 142
+        "__id__": 165
       }
     ],
     "_prefab": null,
@@ -5655,26 +5973,26 @@
     "_name": "Body",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 122
+      "__id__": 140
     },
     "_children": [
       {
-        "__id__": 124
+        "__id__": 142
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 126
+        "__id__": 144
       },
       {
-        "__id__": 127
+        "__id__": 145
       },
       {
-        "__id__": 128
+        "__id__": 146
       },
       {
-        "__id__": 129
+        "__id__": 147
       }
     ],
     "_prefab": null,
@@ -5730,13 +6048,13 @@
     "_name": "Render",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 123
+      "__id__": 141
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 125
+        "__id__": 143
       }
     ],
     "_prefab": null,
@@ -5792,7 +6110,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 124
+      "__id__": 142
     },
     "_enabled": true,
     "_materials": [
@@ -5824,7 +6142,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 141
     },
     "_enabled": true,
     "_type": 2,
@@ -5849,7 +6167,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 141
     },
     "_enabled": true,
     "tag": 0,
@@ -5871,7 +6189,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 141
     },
     "_enabled": true,
     "tag": 1,
@@ -5893,7 +6211,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 141
     },
     "_enabled": true,
     "anchor": {
@@ -5907,7 +6225,7 @@
       "y": 0
     },
     "connectedBody": {
-      "__id__": 130
+      "__id__": 148
     },
     "collideConnected": false,
     "_maxMotorTorque": 0,
@@ -5924,7 +6242,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 131
+      "__id__": 149
     },
     "_enabled": true,
     "_type": 2,
@@ -5949,30 +6267,30 @@
     "_name": "Potion",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 122
+      "__id__": 140
     },
     "_children": [
       {
-        "__id__": 132
+        "__id__": 150
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 135
+        "__id__": 153
       },
       {
-        "__id__": 130
+        "__id__": 148
       },
       {
-        "__id__": 137
+        "__id__": 160
       },
       {
-        "__id__": 138
+        "__id__": 161
       }
     ],
     "_prefab": {
-      "__id__": 139
+      "__id__": 162
     },
     "_opacity": 255,
     "_color": {
@@ -6026,17 +6344,17 @@
     "_name": "Render",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 131
+      "__id__": 149
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 133
+        "__id__": 151
       }
     ],
     "_prefab": {
-      "__id__": 134
+      "__id__": 152
     },
     "_opacity": 255,
     "_color": {
@@ -6090,7 +6408,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 132
+      "__id__": 150
     },
     "_enabled": true,
     "_materials": [
@@ -6118,7 +6436,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 131
+      "__id__": 149
     },
     "asset": {
       "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
@@ -6131,15 +6449,30 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 131
+      "__id__": 149
     },
     "_enabled": true,
     "renderNode": {
-      "__id__": 132
+      "__id__": 150
     },
     "renders": [
       {
-        "__id__": 136
+        "__id__": 154
+      },
+      {
+        "__id__": 155
+      },
+      {
+        "__id__": 156
+      },
+      {
+        "__id__": 157
+      },
+      {
+        "__id__": 158
+      },
+      {
+        "__id__": 159
       }
     ],
     "holder": null,
@@ -6154,11 +6487,46 @@
     }
   },
   {
+    "__type__": "PotionTypeRender",
+    "type": 2,
+    "spriteFrame": {
+      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+    }
+  },
+  {
+    "__type__": "PotionTypeRender",
+    "type": 3,
+    "spriteFrame": {
+      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+    }
+  },
+  {
+    "__type__": "PotionTypeRender",
+    "type": 4,
+    "spriteFrame": {
+      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+    }
+  },
+  {
+    "__type__": "PotionTypeRender",
+    "type": 6,
+    "spriteFrame": {
+      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+    }
+  },
+  {
+    "__type__": "PotionTypeRender",
+    "type": 1000,
+    "spriteFrame": {
+      "__uuid__": "8223bdc1-19cf-4013-90ba-e40becf3e59c"
+    }
+  },
+  {
     "__type__": "cc.PhysicsCircleCollider",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 131
+      "__id__": 149
     },
     "_enabled": true,
     "tag": 0,
@@ -6180,7 +6548,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 131
+      "__id__": 149
     },
     "_enabled": true,
     "_defaultClip": {
@@ -6197,7 +6565,7 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 131
+      "__id__": 149
     },
     "asset": {
       "__uuid__": "13fc5e47-8dd5-4550-9fe5-b675a3a7260d"
@@ -6210,13 +6578,13 @@
     "_name": "InteractionMark",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 122
+      "__id__": 140
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 141
+        "__id__": 164
       }
     ],
     "_prefab": null,
@@ -6272,7 +6640,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 140
+      "__id__": 163
     },
     "_enabled": true,
     "_materials": [
@@ -6304,12 +6672,12 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 122
+      "__id__": 140
     },
     "_enabled": true,
     "runVelocity": 100,
     "interactionMark": {
-      "__id__": 140
+      "__id__": 163
     },
     "interactionMarkOffset": {
       "__type__": "cc.Vec2",
@@ -6317,7 +6685,7 @@
       "y": 30
     },
     "inputs": {
-      "__id__": 143
+      "__id__": 166
     },
     "_N$interactionAreas": [],
     "_id": "65pYcSG9xHEpfESLj53jI6"
