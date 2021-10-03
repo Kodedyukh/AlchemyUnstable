@@ -1,0 +1,41 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "potion_rotate",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "angle": [
+        {
+          "frame": 0,
+          "value": 0
+        },
+        {
+          "frame": 0.25,
+          "value": 30
+        },
+        {
+          "frame": 0.5,
+          "value": -30
+        },
+        {
+          "frame": 0.6666666666666666,
+          "value": 60
+        },
+        {
+          "frame": 0.8333333333333334,
+          "value": -60
+        },
+        {
+          "frame": 1,
+          "value": 63
+        }
+      ]
+    }
+  },
+  "events": []
+}

@@ -26,7 +26,7 @@ cc.Class({
 						const render = this.renders.find(r => r.type === this.type);
 						if (render) {
 							this._sprite.spriteFrame = render.spriteFrame;
-							this.node.opacity = 255;
+							this.renderNode.opacity = 255;
 							
 						}
 						this._collider.sensor = false;
@@ -35,7 +35,7 @@ cc.Class({
 
 				} else {
 					this.orderIndex = -1;
-					this.node.opacity = 0;
+					this.renderNode.opacity = 0;
 					this._collider.sensor = true;
 					this._collider.apply();
 				}
@@ -63,10 +63,14 @@ cc.Class({
 	// LIFE-CYCLE CALLBACKS:
 
 	onLoad () {
-		this._sprite = this.getComponentInChildren(cc.Sprite);
-		this._animation = this.getComponent(cc.Animation);
+		this._sprite = this.renderNode.getComponent(cc.Sprite);
+		this._animation = this.renderNode.getComponent(cc.Animation);
 		this._collider = this.getComponent(cc.PhysicsCircleCollider);
 		this.node.opacity = 0;
+
+		if (this._animation) {
+			this._animation.on('finished', this.shakeEnd, this);
+		}
 	},
 
 	start () {
@@ -77,8 +81,8 @@ cc.Class({
 
 	shakeEnd() {
 		this._destroy();
-		this.renderNode.setPosition(cc.v2());
-		this.renderNode.angle = 0;
+		//this.renderNode.setPosition(cc.v2());
+		//this.renderNode.angle = 0;
 	},
 
 	_launchExplodeTimer() {
@@ -90,8 +94,8 @@ cc.Class({
 	_stopExplodeTimer() {
 		this._animation.stop();
 
-		this.renderNode.setPosition(cc.v2());
-		this.renderNode.angle = 0;
+		//this.renderNode.setPosition(cc.v2());
+		//this.renderNode.angle = 0;
 
 		//this.unschedule(this._destroy);
 	},

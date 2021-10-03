@@ -1,0 +1,62 @@
+
+mage_head.png
+size: 299,508
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+head_main
+  rotate: false
+  xy: 2, 224
+  size: 295, 282
+  orig: 297, 284
+  offset: 1, 1
+  index: -1
+hood_hole
+  rotate: false
+  xy: 2, 149
+  size: 190, 73
+  orig: 192, 75
+  offset: 1, 1
+  index: -1
+l_eye
+  rotate: false
+  xy: 162, 71
+  size: 68, 52
+  orig: 70, 54
+  offset: 1, 1
+  index: -1
+r_eye
+  rotate: false
+  xy: 162, 71
+  size: 68, 52
+  orig: 70, 54
+  offset: 1, 1
+  index: -1
+l_must
+  rotate: false
+  xy: 162, 2
+  size: 63, 67
+  orig: 65, 69
+  offset: 1, 1
+  index: -1
+nose
+  rotate: false
+  xy: 194, 125
+  size: 71, 97
+  orig: 73, 99
+  offset: 1, 1
+  index: -1
+pipka_head
+  rotate: false
+  xy: 2, 14
+  size: 158, 133
+  orig: 158, 133
+  offset: 0, 0
+  index: -1
+r_must
+  rotate: false
+  xy: 227, 2
+  size: 63, 67
+  orig: 65, 69
+  offset: 1, 1
+  index: -1

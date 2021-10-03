@@ -63,22 +63,25 @@ cc.Class({
 		_isPaused: {default: false, serializable: false},
 
         _currentAnimation: { default: null, serializable: false },
-        _lastMousePosition: { default: null, serializable: false },
+        //_lastMousePosition: { default: null, serializable: false },
         
-		_realAngle: { default: 0, serializable: false },
-		_turns: { default: 0, serializable: false },
+		//_realAngle: { default: 0, serializable: false },
+		//_turns: { default: 0, serializable: false },
 
 		_isSleepingPlayer: { default: false, serializable: false},
 
 		_isRunning: {default: false, serializable: false},
 		_rotationDirection: {default: 0, serializable: false},
-		_potionVelocity: {default: 0, serializable: false}
+		_potionVelocity: {default: 0, serializable: false},
+
+		_bodyRender: { default: null, serializable: false },
+		_potionRender: { default: null, serializable: false },
 	},
 
 	// LIFE-CYCLE CALLBACKS:
 
 	onLoad () {
-        this._lastMousePosition = cc.Vec2.ZERO;
+        //this._lastMousePosition = cc.Vec2.ZERO;
 
 		this._body = this.getComponentInChildren(cc.RigidBody);
         this._joint = this.getComponentInChildren(cc.Joint);
@@ -93,6 +96,12 @@ cc.Class({
         if (this._potion) {
             this._potion.holder = this;
         }
+
+		this._bodyRender = this.node.getChildByName('Skeleton');
+		this._potionRender = this.node.getChildByName('PotionRender');
+
+		if (this._bodyRender) this._bodyRender.zIndex = 5;
+		if (this.interactionMark) this.interactionMark.zIndex = 10;
 
 		this._handleSubscription(true); 
 	},
@@ -122,10 +131,10 @@ cc.Class({
             	this._joint.apply();
             }
 
-            if (this.interactionMark) {
-                const bodyPosition = this._body.node.position;
-                this.interactionMark.setPosition(bodyPosition.add(this.interactionMarkOffset));
-            }
+			if (this._potionRender) {
+				const angle = (this._body.node.angle % 360 + 360) % 360;
+				this._potionRender.zIndex = angle > 180 ? 6 : 4;
+			}
 		}
 	},
 
@@ -290,7 +299,7 @@ cc.Class({
 	},
 
     onMouseMove(position) {
-        this._lastMousePosition = position;
+        //this._lastMousePosition = position;
     },
 
 	onTogglePause(isOn) {
