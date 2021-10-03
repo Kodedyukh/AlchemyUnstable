@@ -6,5 +6,6 @@ export default cc.Enum({
     Yellow: 4,
     //Purple: 5,
     Water: 6,
-    Extra: 1000
+    Extra: 1000,
+    Result: 1001
 });

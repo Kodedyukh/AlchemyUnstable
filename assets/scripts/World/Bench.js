@@ -63,7 +63,7 @@ cc.Class({
         if (this._isUnstable) {
             this._unstableTimer -= dt;
             if (this._unstableTimer < 0) {
-                cc.systemEvent.emit(GameEvent.POTION_WASTED);
+                cc.systemEvent.emit(GameEvent.POTION_WASTED, this._currentOrder);
                 this._isUnstable = false;
                 this._checkCurrentOrder(true);
                 cc.log('potion wasted');
@@ -77,6 +77,10 @@ cc.Class({
 
     interact(initiator) {
         const deliveredPotionType = initiator.getPotionType();
+
+        initiator.setPotionType(PotionTypes.None);
+        initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
+
         if (!this._isUnstable) {
             const targetIngredient = this.orders[this._currentOrder].ingridients.find(i => !i._isDelivered);
             if (deliveredPotionType !== targetIngredient.potionType) {
@@ -92,20 +96,22 @@ cc.Class({
                 cc.log('potion is stable');
             }
         }
-
-        initiator.setPotionType(PotionTypes.None);
-        initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
     },
 
 	_handleSubscription(isOn) {
 		const func = isOn ? 'on' : 'off';
 
 		cc.systemEvent[func](GameEvent.GET_CURRENT_ORDER, this.onGetCurrentOrder, this);
+		cc.systemEvent[func](GameEvent.GET_CURRENT_ORDER_INDEX, this.onGetCurrentOrderIndex, this);
 	},
 
-    _checkCurrentOrder(next = false) {
+    _checkCurrentOrder(fail = false) {
         const currentOrder = this.orders[this._currentOrder];
-        if (currentOrder.ingridients.filter(i => !i._isDelivered).length === 0 || next) {
+        if (currentOrder.ingridients.filter(i => !i._isDelivered).length === 0 || fail) {
+            if (!fail) {
+                cc.systemEvent.emit(GameEvent.POTION_IS_READY);
+            }
+            
             if (++this._currentOrder >= this.orders.length) {
                 this._generateNewOrder();
             }
@@ -122,7 +128,7 @@ cc.Class({
         const ingredientsCount = this.orders.slice(-1)[0].ingridients.length + 1;
         this.orders.push(new Recipe());
 
-        const potionNames = Object.keys(PotionTypes).filter(key => key !== 'None' && key !== 'Extra');
+        const potionNames = Object.keys(PotionTypes).filter(key => !['None', 'Extra', 'Result'].includes(key));
 
         for (let i = 0; i < ingredientsCount; i++) {
             const potionNameIndex = Math.floor(potionNames.length * Math.random());
@@ -139,5 +145,9 @@ cc.Class({
     onGetCurrentOrder(callback) {
         const currentOrder = this.orders[this._currentOrder];
         callback instanceof Function && callback(currentOrder.ingridients);
+    },
+
+    onGetCurrentOrderIndex(callback) {
+        callback instanceof Function && callback(this._currentOrder);
     }
 });

@@ -1,6 +1,7 @@
 import CollisionGroups from 'CollisionGroups';
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
+import GameEvent from 'GameEvent';
 
 const PotionTypeRender = cc.Class({
 	name: 'PotionTypeRender',
@@ -20,16 +21,20 @@ cc.Class({
 			visible: false,
 			notify() {
 				if (this.type !== PotionTypes.None) {
-					const render = this.renders.find(r => r.type === this.type);
-					if (render) {
-						this._sprite.spriteFrame = render.spriteFrame;
-						this.node.opacity = 255;
-						
-					}
-					this._collider.sensor = false;
-					this._collider.apply();
+					cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER_INDEX, (index) => {
+						this.orderIndex = index;
+						const render = this.renders.find(r => r.type === this.type);
+						if (render) {
+							this._sprite.spriteFrame = render.spriteFrame;
+							this.node.opacity = 255;
+							
+						}
+						this._collider.sensor = false;
+						this._collider.apply();
+					});
 
 				} else {
+					this.orderIndex = -1;
 					this.node.opacity = 0;
 					this._collider.sensor = true;
 					this._collider.apply();
@@ -48,6 +53,7 @@ cc.Class({
 		},
 
 		holder: { default: null, visible: false },
+		orderIndex: { default: null, visible: false },
 
 		_sprite: { default: null, serializable: false },
 		_animation: {default: null, serializable: false},
@@ -91,6 +97,10 @@ cc.Class({
 	},
 
 	_destroy() {
+		if (this.type === PotionTypes.Result) {
+			cc.systemEvent.emit(GameEvent.POTION_WASTED, this.orderIndex);
+		}
+
 		this.type = PotionTypes.None;
 	},
 
@@ -100,14 +110,26 @@ cc.Class({
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){
 			case CollisionGroups.Bench: {
-				const interact = other.node.getComponent(InteractionArea);
-				if (!this.holder.interactionAreas.includes(interact)) {
-					this.holder.interactionAreas = this.holder.interactionAreas.concat(interact);
+				if (this.type !== PotionTypes.Result) {
+					const interact = other.node.getComponent(InteractionArea);
+					if (interact && !this.holder.interactionAreas.includes(interact)) {
+						this.holder.interactionAreas = this.holder.interactionAreas.concat(interact);
+					}
 				}
 			} break;
+			case CollisionGroups.Visitor: {
+				if (this.type === PotionTypes.Result) {
+					const interact = other.node.getComponent(InteractionArea);
+					if (interact && interact.visitorIndex === this.orderIndex && !this.holder.interactionAreas.includes(interact)) {
+						this.holder.interactionAreas = this.holder.interactionAreas.concat(interact);
+					}
+				}
+			} break;
+
 			case CollisionGroups.Alchemist: 
 			case CollisionGroups.PotionFactory: 
 				break;
+
 			case CollisionGroups.Cat:
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
@@ -125,7 +147,17 @@ cc.Class({
 		switch(otherGroupName){
 			case CollisionGroups.Bench: {
 				const interact = other.node.getComponent(InteractionArea);
-				this.holder.interactionAreas = this.holder.interactionAreas.filter(a => a !== interact);
+				if (interact) {
+					this.holder.interactionAreas = this.holder.interactionAreas.filter(a => a !== interact);
+				}
+			} break;
+			case CollisionGroups.Visitor: {
+				if (this.type === PotionTypes.Result) {
+					const interact = other.node.getComponent(InteractionArea);
+					if (interact) {
+						this.holder.interactionAreas = this.holder.interactionAreas.filter(a => a !== interact);
+					}
+				}
 			} break;
 
 			case CollisionGroups.Cat:

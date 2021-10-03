@@ -176,6 +176,8 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
 
 		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
+
+		cc.systemEvent[func](GameEvent.POTION_IS_READY, this.onPotionIsReady, this);
 	},
 
     _countAngle() {
@@ -302,29 +304,39 @@ cc.Class({
 	},
 
 	onBeginContact(contact, self, other) {
-		const otherGroupName = other.node.group;
-		cc.log(otherGroupName)
-		switch(otherGroupName){
-			case CollisionGroups.PotionFactory: {
-				if (self.tag === 1) {
-                    const interact = other.node.getComponent(InteractionArea);
-                    if (!this.interactionAreas.includes(interact) && !this.hasPotion()) {
-                        this.interactionAreas = this.interactionAreas.concat(interact);
-                    }
-				}
-				
-			} break;
+		if (self.tag === 1) {
+			const interact = other.node.getComponent(InteractionArea);
+			const otherGroupName = other.node.group;
+			switch(otherGroupName){
+				case CollisionGroups.PotionFactory: {
+					if (interact && !this.interactionAreas.includes(interact) && !this.hasPotion()) {
+						this.interactionAreas = this.interactionAreas.concat(interact);
+					}
+				} break;
+				case CollisionGroups.Visitor: {
+					if (this.getPotionType() !== PotionTypes.Result) {
+						cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER_INDEX, (index) => {
+							if (interact && interact.visitorIndex === index && !this.interactionAreas.includes(interact)) {
+								this.interactionAreas = this.interactionAreas.concat(interact);
+							}
+						});
+					}
+				} break;
+			}
 		}
 	},
 	onEndContact(contact, self, other) {
-		const otherGroupName = other.node.group;
-		switch(otherGroupName){
-			case CollisionGroups.PotionFactory: {
-				if (self.tag === 1) {
-                    const interact = other.node.getComponent(InteractionArea);
-                    this.interactionAreas = this.interactionAreas.filter(a => a !== interact);
-				}
-			} break;
+		if (self.tag === 1) {
+			const interact = other.node.getComponent(InteractionArea);
+			const otherGroupName = other.node.group;
+			switch(otherGroupName){
+				case CollisionGroups.PotionFactory:
+				case CollisionGroups.Visitor: {
+					if (interact) {
+						this.interactionAreas = this.interactionAreas.filter(a => a !== interact);
+					}
+				} break;
+			}
 		}
 	},
 
@@ -350,5 +362,9 @@ cc.Class({
 
 	onPushButtonReleased() {
 		this._potionVelocity = 0;
+	},
+
+	onPotionIsReady() {
+		this.setPotionType(PotionTypes.Result);
 	}
 });

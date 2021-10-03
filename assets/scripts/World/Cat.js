@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        startDirection: { default: cc.v2(1, 0), type: cc.Vec2 },
+        startDirection: { default: cc.v2(1, 0) },
         speed: { default: 1, type: cc.Float },
 
         _currentDirection: { default: null, serializable: false },
@@ -48,6 +48,7 @@ cc.Class({
         if (self.tag === 0) {
             switch(otherGroupName){
                 case CollisionGroups.Wall:
+                case CollisionGroups.PotionFactory:
 
                     this._isMoveEnable = false;
                     const reverseCurrentDirection = this._currentDirection.neg();

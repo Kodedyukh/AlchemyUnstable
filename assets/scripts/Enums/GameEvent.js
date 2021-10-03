@@ -32,7 +32,10 @@ export default cc.Enum({
 
     //Potion
     POTION_WASTED: 2000,
+    POTION_IS_READY: 2001,
 
     //Orders
-    GET_CURRENT_ORDER:3000
+    GET_CURRENT_ORDER: 3000,
+    GET_CURRENT_ORDER_INDEX: 3001,
+    ORDER_COMPLITED: 3002
 });
