@@ -14,9 +14,12 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        //offset: { default: cc.v2(0, 50) },
         potions: { default: [], type: PotionRenderHelper },
-        offset: { default: cc.v2(20, 0), type: cc.Vec2 },
-        startPosition: { default: cc.v2(0, 0), type: cc.Vec2 },
+        potionOffset: { default: cc.v2(20, 0) },
+        startPosition: { default: cc.v2(0, 0) },
+
+		_ingredientNodes: { default: null, serializable: false }
     },
 
     onEnable() {
@@ -46,15 +49,26 @@ cc.Class({
 
             ingridientNode.parent = this.node;
             ingridientNode.setScale(0.35);
+            ingridientNode.zIndex = 2; 
 
-            const position = cc.v2(this.startPosition.x + this.offset.x * index, this.startPosition.y + this.offset.y * index );
+            const position = cc.v2(this.startPosition.x + this.potionOffset.x * index, this.startPosition.y + this.potionOffset.y * index );
             ingridientNode.setPosition(position);
+
+            this._ingredientNodes.push(ingridientNode);
         });
     },
 
-    onShowBubble() {
+    onShowBubble(position) {
+        this.node.setPosition(position);//.add(this.offset));
         this.node.opacity = 255;
         
+        if (this._ingredientNodes) {
+            this._ingredientNodes.forEach(node => {
+                node.destroy();
+            });
+        }
+        this._ingredientNodes = [];
+
         cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients)=>{this._setIngridients(ingridients)});
     },
 

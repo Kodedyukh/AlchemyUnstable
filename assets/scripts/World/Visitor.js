@@ -29,7 +29,7 @@ cc.Class({
             cc.systemEvent.emit(GameEvent.ORDER_COMPLITED);
             this._escape();
         } else {
-            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE);
+            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node.position);
         }
     },
 
