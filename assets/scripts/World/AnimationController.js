@@ -17,39 +17,46 @@ cc.Class({
     },
 
     start () {
-        this._baseTurning = this.baseSkeleton.setAnimation(1, 'turn_360', true);
-        this._baseTurning.timeScale = 0;
-        this._headTurning = this.headSkeleton.setAnimation(1, 'turn_360', true);
-        this._headTurning.timeScale = 0;
-        
-        window.DEBUGGER_ELEMENT = this
+        if (this.baseSkeleton) {
+            this._baseTurning = this.baseSkeleton.setAnimation(1, 'turn_360', true);
+            this._baseTurning.timeScale = 0;
+        }
+        if (this.headSkeleton) {
+            this._headTurning = this.headSkeleton.setAnimation(1, 'turn_360', true);
+            this._headTurning.timeScale = 0;
+        }
     },
 
     switchAnimation(name) {
     },
 
     update (dt) {
-        if (this.body.linearVelocity.x !== 0 || this.body.linearVelocity.y !== 0) {
-            if (this._currentState !== 'run') {
-                this._currentState = 'run';
-                this.baseSkeleton.setAnimation(0, 'run', true);
-                this.headSkeleton.setAnimation(0, 'run', true);
+        if (this.body) {
+            const isMoving = this.body.linearVelocity.x !== 0 || this.body.linearVelocity.y !== 0;
+            if (isMoving) {
+                if (this._currentState !== 'run') {
+                    this._currentState = 'run';
+                    this.baseSkeleton && this.baseSkeleton.setAnimation(0, 'run', true);
+                    this.headSkeleton && this.headSkeleton.setAnimation(0, 'run', true);
+                }
+            } else {
+                if (this._currentState !== 'idle') {
+                    this._currentState = 'idle';
+                    this.baseSkeleton && this.baseSkeleton.setAnimation(0, 'idle', true);
+                    this.headSkeleton && this.headSkeleton.setAnimation(0, 'idle', true);
+                }
             }
-        } else {
-            if (this._currentState !== 'idle') {
-                this._currentState = 'idle';
-                this.baseSkeleton.setAnimation(0, 'idle', true);
-                this.headSkeleton.setAnimation(0, 'idle', true);
-            }
-        }
 
         
-		const headAngle = (this.body.node.angle % 360 + 360) % 360;
-        this._headTurning.trackTime = headAngle / 360 * 2 + .5;
+            if (this._headTurning) { 
+                const headAngle = (this.body.node.angle % 360 + 360) % 360;
+                this._headTurning.trackTime = headAngle / 360 * 2 + .5;
+            }
 
-        if (this.body.linearVelocity.x !== 0 || this.body.linearVelocity.y !== 0) {
-            const baseAngle = Math.atan2(this.body.linearVelocity.x, this.body.linearVelocity.y) * 180 / Math.PI;
-            this._baseTurning.trackTime = ((360 - (360 + baseAngle) % 360 + 180) % 360) / 360  * 2;
+            if (isMoving && this._baseTurning) {
+                const baseAngle = Math.atan2(this.body.linearVelocity.x, this.body.linearVelocity.y) * 180 / Math.PI;
+                this._baseTurning.trackTime = ((360 - (360 + baseAngle) % 360 + 180) % 360) / 360  * 2;
+            }
         }
     },
 });

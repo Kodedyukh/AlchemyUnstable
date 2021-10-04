@@ -1,0 +1,111 @@
+
+cat.png
+size: 271,463
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+HEAD
+  rotate: false
+  xy: 2, 119
+  size: 192, 192
+  orig: 194, 194
+  offset: 1, 1
+  index: -1
+body
+  rotate: true
+  xy: 2, 313
+  size: 148, 219
+  orig: 150, 221
+  offset: 1, 1
+  index: -1
+ear_l
+  rotate: false
+  xy: 196, 193
+  size: 73, 80
+  orig: 75, 82
+  offset: 1, 1
+  index: -1
+ear_r
+  rotate: false
+  xy: 196, 111
+  size: 73, 80
+  orig: 75, 82
+  offset: 1, 1
+  index: -1
+eye_l
+  rotate: true
+  xy: 223, 275
+  size: 60, 39
+  orig: 62, 41
+  offset: 1, 1
+  index: -1
+eye_r
+  rotate: false
+  xy: 174, 6
+  size: 60, 39
+  orig: 62, 41
+  offset: 1, 1
+  index: -1
+hair
+  rotate: true
+  xy: 195, 47
+  size: 62, 63
+  orig: 64, 65
+  offset: 1, 1
+  index: -1
+nose
+  rotate: false
+  xy: 196, 283
+  size: 24, 12
+  orig: 26, 14
+  offset: 1, 1
+  index: -1
+paw_l
+  rotate: true
+  xy: 2, 2
+  size: 52, 84
+  orig: 54, 86
+  offset: 1, 1
+  index: -1
+paw_r
+  rotate: true
+  xy: 88, 2
+  size: 52, 84
+  orig: 54, 86
+  offset: 1, 1
+  index: -1
+pupil
+  rotate: false
+  xy: 196, 297
+  size: 24, 14
+  orig: 26, 16
+  offset: 1, 1
+  index: -1
+pupil2
+  rotate: false
+  xy: 196, 297
+  size: 24, 14
+  orig: 26, 16
+  offset: 1, 1
+  index: -1
+tail
+  rotate: true
+  xy: 2, 56
+  size: 61, 191
+  orig: 61, 191
+  offset: 0, 0
+  index: -1
+whiskers_l
+  rotate: true
+  xy: 223, 400
+  size: 61, 43
+  orig: 63, 45
+  offset: 1, 1
+  index: -1
+whiskers_r
+  rotate: true
+  xy: 223, 337
+  size: 61, 43
+  orig: 63, 45
+  offset: 1, 1
+  index: -1

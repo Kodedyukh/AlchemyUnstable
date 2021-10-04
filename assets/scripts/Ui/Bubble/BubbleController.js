@@ -19,13 +19,16 @@ cc.Class({
         potionOffset: { default: cc.v2(20, 0) },
         startPosition: { default: cc.v2(0, 0) },
 
-		_ingredientNodes: { default: null, serializable: false }
+		graphics: { default: null, type: cc.Graphics },
+		shadowGraphics: { default: null, type: cc.Graphics },
+
+		_ingredientNodes: { default: null, serializable: false },
     },
 
     onEnable() {
         this._handleSubscription(true);
 
-        this.node.opacity = 0;
+        //this.node.opacity = 0;
     },
 
     onDisable() {
@@ -58,6 +61,58 @@ cc.Class({
         });
     },
 
+    _drawGraphics() {
+        this.graphics.clear();
+        this.shadowGraphics.clear();
+
+        if (this._ingredientNodes.length) {
+            const padding = 5;
+            const potionNode = this._ingredientNodes[0];
+            const semiHeight = potionNode.height / 2 * potionNode.scaleY + padding;
+            const semiWidth = potionNode.width / 2 * potionNode.scaleX + padding;
+            const bubbleWidth = (this._ingredientNodes.length * semiWidth + this.potionOffset.x) - this.potionOffset.x;
+            const rad = Math.PI / 180;
+
+            this.graphics.moveTo(0, this.startPosition.y - semiHeight * 2);
+            this.shadowGraphics.moveTo(0, this.startPosition.y - semiHeight * 2);
+
+            this._drawLine(5, this.startPosition.y - semiHeight);
+            
+            
+            this._drawLine(-semiWidth + padding, this.startPosition.y - semiHeight);
+            this._drawLine(-semiWidth + padding / 3, this.startPosition.y - semiHeight + padding / 3);
+            this._drawLine(-semiWidth, this.startPosition.y - semiHeight + padding);
+            
+            this._drawLine(-semiWidth, this.startPosition.y + semiHeight - padding);
+            this._drawLine(-semiWidth + padding / 3, this.startPosition.y + semiHeight - padding / 3);
+            this._drawLine(-semiWidth + padding, this.startPosition.y + semiHeight);
+            
+            this._drawLine(bubbleWidth + semiWidth - padding, this.startPosition.y + semiHeight);
+            this._drawLine(bubbleWidth + semiWidth - padding / 3, this.startPosition.y + semiHeight - padding / 3);
+            this._drawLine(bubbleWidth + semiWidth, this.startPosition.y + semiHeight - padding);
+            
+            this._drawLine(bubbleWidth + semiWidth, this.startPosition.y - semiHeight + padding);
+            this._drawLine(bubbleWidth + semiWidth - padding / 3, this.startPosition.y - semiHeight + padding / 3);
+            this._drawLine(bubbleWidth + semiWidth - padding, this.startPosition.y - semiHeight);
+
+            this._drawLine(20, this.startPosition.y - semiHeight);
+
+            this.graphics.lineTo(0, this.startPosition.y - semiHeight * 2);
+            this.shadowGraphics.lineTo(0, this.startPosition.y - semiHeight * 2);
+
+            this.graphics.stroke();
+            this.graphics.fill();
+
+            this.shadowGraphics.stroke();
+            this.shadowGraphics.fill();
+        }
+    },
+
+    _drawLine(x, y) {
+        this.graphics.lineTo(x, y);
+        this.shadowGraphics.lineTo(x + 5, y - 5);
+    },
+
     onShowBubble(position) {
         this.node.setPosition(position);//.add(this.offset));
         this.node.opacity = 255;
@@ -69,7 +124,8 @@ cc.Class({
         }
         this._ingredientNodes = [];
 
-        cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients)=>{this._setIngridients(ingridients)});
+        cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients)=>{ this._setIngridients(ingridients) });
+        this._drawGraphics();
     },
 
     onHideBubble() {
