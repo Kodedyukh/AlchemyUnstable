@@ -1,4 +1,6 @@
 import CollisionGroups from 'CollisionGroups';
+import GameEvent from 'GameEvent';
+import AudioTypes from 'AudioTypes';
 
 const CatDirections = [
     cc.v2(0, 1),
@@ -145,6 +147,10 @@ cc.Class({
                     if (this._isMoveEnable) this._calculateNewDirection();
 
                     break;
+
+                    case CollisionGroups.Alchemist:
+                        cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Cat);
+                        break;
 
                 default: 
                     break;

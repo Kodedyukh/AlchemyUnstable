@@ -1,4 +1,5 @@
 import GameEvent from 'GameEvent';
+import AudioTypes from'AudioTypes';
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
 
@@ -113,6 +114,7 @@ cc.Class({
                 break;
             case VisitorStatus.Leaving: 
                 this._animation.play(this._animation._clips[2].name);
+                cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Mumble);
                 break;
         }
     },

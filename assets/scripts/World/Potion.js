@@ -2,6 +2,7 @@ import CollisionGroups from 'CollisionGroups';
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
 import GameEvent from 'GameEvent';
+import AudioTypes from 'AudioTypes';
 
 const PotionTypeRender = cc.Class({
 	name: 'PotionTypeRender',
@@ -41,7 +42,7 @@ cc.Class({
 					this._collider.apply();
 					
 					this._tween = cc.tween(this.renderNode);
-					this._tween.to(.35, { opacity : 0 }).start();
+					this._tween.to(.15, { opacity : 0 }).start();
 				}
 			}
 		},
@@ -113,6 +114,7 @@ cc.Class({
 
 	_launchExplodeTimer() {
 		this._animation.play();
+		cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BottleScratch);
 
 		if (this.touchEffect) {
 			this.touchEffect.resetSystem();
@@ -123,6 +125,7 @@ cc.Class({
 
 	_stopExplodeTimer() {
 		this._animation.stop();
+		cc.systemEvent.emit(GameEvent.STOP_AUDIO, AudioTypes.BottleScratch);
 
 		if (this.touchEffect) {
 			this.touchEffect.stopSystem();
@@ -150,6 +153,9 @@ cc.Class({
 		}
 
 		this.holder.setPotionType(PotionTypes.None);
+
+		cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Glass);
+		cc.systemEvent.emit(GameEvent.STOP_AUDIO, AudioTypes.BottleScratch);
 	},
 
 	onBeginContact(contact, self, other) {
@@ -179,6 +185,7 @@ cc.Class({
 				break;
 
 			case CollisionGroups.Cat:
+				cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Cat);
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
 					this._launchExplodeTimer();

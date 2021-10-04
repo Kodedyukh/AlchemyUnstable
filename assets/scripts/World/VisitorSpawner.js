@@ -55,7 +55,9 @@ cc.Class({
 		const func = isOn ? 'on' : 'off';
 
 		cc.systemEvent[func](GameEvent.POTION_WASTED, this.onPotionWasted, this);
+		cc.systemEvent[func](GameEvent.POTION_CRASHED, this.onPotionCrashed, this);
 		cc.systemEvent[func](GameEvent.ORDER_COMPLITED, this.onOrderComplited, this);
+		cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
 	},
 
     onPotionWasted() {
@@ -64,7 +66,19 @@ cc.Class({
         }, 6 + Math.random() * 2);
     },
 
+    onPotionCrashed() {
+        this.scheduleOnce(() => {
+            this._addNewVisitor();
+        }, 6 + Math.random() * 2);
+    },
+
     onOrderComplited() {
+        this.scheduleOnce(() => {
+            this._addNewVisitor();
+        }, 6 + Math.random() * 2);
+    },
+
+    onOrderOutOfTime() {
         this.scheduleOnce(() => {
             this._addNewVisitor();
         }, 6 + Math.random() * 2);
