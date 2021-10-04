@@ -117,6 +117,7 @@ cc.Class({
 
 		cc.systemEvent[func](GameEvent.GET_CURRENT_ORDER, this.onGetCurrentOrder, this);
 		cc.systemEvent[func](GameEvent.GET_CURRENT_ORDER_INDEX, this.onGetCurrentOrderIndex, this);
+		cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
 	},
 
     _checkCurrentOrder(fail = false) {
@@ -165,5 +166,11 @@ cc.Class({
 
     onGetCurrentOrderIndex(callback) {
         callback instanceof Function && callback(this._currentOrder);
+    }, 
+    
+    onOrderOutOfTime() {
+        if (++this._currentOrder >= this.orders.length) {
+            this._generateNewOrder();
+        }
     }
 });

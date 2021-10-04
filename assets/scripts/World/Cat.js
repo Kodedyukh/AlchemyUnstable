@@ -34,6 +34,8 @@ cc.Class({
         _rageMode: { default: false, serializable: false },
         _rageTimer: { default: 0, serializable: false },
         _rageTestTimer: { default: 0, serializable: false },
+
+        _collider: { default: null, serializable: false },
     },
 
     onEnable() {
@@ -86,7 +88,12 @@ cc.Class({
         cc.tween(this.node)
             .to(1, { angle: directionAngle })
             .call(() => {
-                if (this._isColliding) {
+                if (this._isColliding && this._collider) {
+                    const tmp = this._collider.width;
+                    this._collider.width = this._collider.height;
+                    this._collider.height = tmp;
+                    this._collider.apply();
+                    
                     this._calculateNewDirection();
                 } else {
                     this._currentMoveVector = direction;
@@ -128,6 +135,8 @@ cc.Class({
         const otherGroupName = other.node.group;
 
         if (self.tag === 0) {
+            if (!this._collider) this._collider = self;
+
             switch(otherGroupName){
                 case CollisionGroups.Wall:
                 case CollisionGroups.PotionFactory:

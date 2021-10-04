@@ -15,13 +15,6 @@ const PlayerInputsHelper = cc.Class({
 	},
 });
 
-const PlayerAnimations = cc.Enum({
-    Idle: 'player_idle',
-    Run: 'player_run',
-    Jump: 'player_jump',
-    Repair: 'player_repair'
-})
-
 cc.Class({
 	extends: cc.Component,
 
@@ -38,6 +31,11 @@ cc.Class({
 		interactionMarkOffset: {
 			default: cc.Vec2.ZERO,
             visible() { return this.interactionMark !== null }
+		},
+		
+		rayNode: {
+			default: null,
+			type: cc.Node
 		},
 
 
@@ -103,6 +101,8 @@ cc.Class({
 		if (this._bodyRender) this._bodyRender.zIndex = 5;
 		if (this.interactionMark) this.interactionMark.zIndex = 10;
 
+		this.rayNode.active = false;
+
 		this._handleSubscription(true); 
 	},
 
@@ -121,7 +121,6 @@ cc.Class({
 
 			this._body.linearVelocity = velocity;
             this._countAngle();
-            //this._setAnimation();
 
             if (this._potionVelocity !== 0 && this._potion.type !== PotionTypes.None) {
             	const currentDistance = this._joint.connectedAnchor.x;
@@ -150,6 +149,8 @@ cc.Class({
         this._potion.type = potionType;
         this._joint.connectedAnchor = cc.v2(-20, 0);
         this._joint.apply();
+
+		this.rayNode.active = (potionType !== PotionTypes.None);
     },
 
 	_handleSubscription(isOn) {
@@ -182,7 +183,7 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.PUSH_BUTTON_PRESSED, this.onPushButtonPressed, this);
 		cc.systemEvent[func](GameEvent.PUSH_BUTTON_RELEASED, this.onPushButtonReleased, this);
 
-		cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
+		//cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
 
 		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
 
@@ -208,29 +209,6 @@ cc.Class({
 
         // for arrows
         this._body.angularVelocity = this.rotationVelocity * this._rotationDirection;
-    },
-
-    _setAnimation() {
-        let animation = PlayerAnimations.Idle;
-
-        if (this._isJumping) {
-            animation = PlayerAnimations.Jump;
-        } else {
-            if (this.inputs.left) {
-                animation = PlayerAnimations.Run;
-                this.node.scaleX = -1;
-            } else if (this.inputs.right) {
-                animation = PlayerAnimations.Run;
-                this.node.scaleX = 1;
-            } /*else if (this.inputs.use && this.interactionAreas.length && this.interactionAreas[0].repairable) {
-                animation = PlayerAnimations.Repair;
-            }*/
-        }
-
-        if (this._currentAnimation !== animation) {
-            this._currentAnimation = animation;
-            this._animation.play(animation);
-        }
     },
 
 	onLeftButtonPressed() {

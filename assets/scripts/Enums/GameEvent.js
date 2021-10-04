@@ -33,16 +33,22 @@ export default cc.Enum({
     //Potion
     POTION_WASTED: 2000,
     POTION_IS_READY: 2001,
+    POTION_CRASHED: 2002,
 
     //Orders
     GET_CURRENT_ORDER: 3000,
     GET_CURRENT_ORDER_INDEX: 3001,
     ORDER_COMPLITED: 3002,
+    ORDER_OUT_OF_TIME: 3003,
 
     //Bubble
     SHOW_BUBBLE: 4000,
     HIDE_BUBBLE: 4001,
 
     //Timer
-    START_TIMER: 5000
+    START_TIMER: 5000,
+
+    //Ui
+    HP_MINUS: 10000,
+    GAME_OVER: 10001,
 });

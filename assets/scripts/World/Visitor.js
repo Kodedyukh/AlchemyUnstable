@@ -123,7 +123,6 @@ cc.Class({
             initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
 
             cc.systemEvent.emit(GameEvent.ORDER_COMPLITED);
-            this._escape();
         } 
     },
 
@@ -144,14 +143,24 @@ cc.Class({
 		const func = isOn ? 'on' : 'off';
 
 		cc.systemEvent[func](GameEvent.POTION_WASTED, this.onPotionWasted, this);
+		cc.systemEvent[func](GameEvent.POTION_CRUSHED, this.onPotionCrushed, this);
 		cc.systemEvent[func](GameEvent.ORDER_COMPLITED, this.onOrderComplited, this);
+		cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
 	},
 
     onPotionWasted() {
         this.changeStatus();
     },
 
+    onPotionCrushed() {
+        this.changeStatus();
+    },
+
     onOrderComplited() {
+        this.changeStatus();
+    },
+
+    onOrderOutOfTime() {
         this.changeStatus();
     }
 });

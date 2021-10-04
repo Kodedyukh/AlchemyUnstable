@@ -38,31 +38,40 @@ cc.Class({
 	},
 
     _startCallback() {
+        this._activate();
+    },
+
+    _endCallback() {
+        cc.tween(this.node).to(.5, { opacity: 0 })
+            .call(() => {
+                this._deactivate();
+                cc.systemEvent.emit(GameEvent.ORDER_OUT_OF_TIME);
+                cc.systemEvent.emit(GameEvent.HP_MINUS);
+            })
+            .start();
+    },
+
+    _activate() {
         this.node.opacity = 0;
         this.node.active = true;
 
         cc.tween(this.node).to(.5, { opacity: 255 }).start();
     },
 
-    _endCallback(force) {
-        cc.tween(this.node).to(.5, { opacity: 0 })
-            .call(() => {
-                this.node.active = false;
-                if (this._tween) this._tween.stop();
+    _deactivate() {
+        this.node.active = false;
+        if (this._tween) this._tween.stop();
 
-                this.render.fillRange = 1;
-                this.backRender.fillRange = 1;
-                !force && cc.systemEvent.emit(GameEvent.POTION_WASTED);
-            })
-            .start();
+        this.render.fillRange = 1;
+        this.backRender.fillRange = 1;
     },
 
     onPotionWasted() {
-        this.node.active && this._endCallback(true);
+        this._deactivate();
     },
     
     onOrderComplited() {
-        this.node.active && this._endCallback(true);
+        this._deactivate();
     },
     
     onStartTimer() {

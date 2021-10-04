@@ -20,14 +20,16 @@ cc.Class({
 			type: PotionTypes,
 			visible: false,
 			notify() {
+				this._tween && this._tween.stop();
 				if (this.type !== PotionTypes.None) {
 					cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER_INDEX, (index) => {
 						this.orderIndex = index;
 						const render = this.renders.find(r => r.type === this.type);
 						if (render) {
 							this._sprite.spriteFrame = render.spriteFrame;
-							this.renderNode.opacity = 255;
-							
+
+							this._tween = cc.tween(this.renderNode);
+							this._tween.to(.5, { opacity : 255 }).start();
 						}
 						this._collider.sensor = false;
 						this._collider.apply();
@@ -35,9 +37,11 @@ cc.Class({
 
 				} else {
 					this.orderIndex = -1;
-					this.renderNode.opacity = 0;
 					this._collider.sensor = true;
 					this._collider.apply();
+					
+					this._tween = cc.tween(this.renderNode);
+					this._tween.to(.35, { opacity : 0 }).start();
 				}
 			}
 		},
@@ -59,7 +63,8 @@ cc.Class({
 		_effectNode: { default: null, serializable: false },
 
 		_animation: {default: null, serializable: false},
-		_collider: {default: null, serializable: false}
+		_collider: {default: null, serializable: false},
+		_tween: {default: null, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -71,7 +76,8 @@ cc.Class({
 		this._animation = this.renderNode.getComponent(cc.Animation);
 		this._collider = this.getComponent(cc.PhysicsCircleCollider);
 		
-		this._effectNode.opacity = 0;
+		//this._effectNode.opacity = 0;
+		this.renderNode.opacity = 0;
 
 		if (this._animation) {
 			this._animation.on('finished', this.shakeEnd, this);
@@ -107,10 +113,11 @@ cc.Class({
 
 	_destroy() {
 		if (this.type === PotionTypes.Result) {
-			cc.systemEvent.emit(GameEvent.POTION_WASTED, this.orderIndex);
+			cc.systemEvent.emit(GameEvent.POTION_CRASHED, this.orderIndex);
+			cc.systemEvent.emit(GameEvent.HP_MINUS);
 		}
 
-		this.type = PotionTypes.None;
+		this.holder.setPotionType(PotionTypes.None);
 	},
 
 	onBeginContact(contact, self, other) {
