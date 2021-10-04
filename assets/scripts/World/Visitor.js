@@ -6,19 +6,30 @@ cc.Class({
     extends: InteractionArea,
 
     properties: {
-        visitorIndex: 0
+        visitorIndex: 0,
+        skeleton: { default: null, type: sp.Skeleton }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         this._handleSubscription(true);
+
+        this.onEndWalk();
     },
 
     start () {
     },
 
     update (dt) {
+    },
+
+    onWalkStart() {
+        this.skeleton && this.skeleton.setAnimation(0, 'run', true);
+    },
+
+    onWalkEnd() {
+        this.skeleton && this.skeleton.setAnimation(0, 'idle', true);
     },
 
     interact(initiator) {
@@ -28,15 +39,20 @@ cc.Class({
 
             cc.systemEvent.emit(GameEvent.ORDER_COMPLITED);
             this._escape();
-        } else {
-            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node.position);
-        }
+        } 
     },
 
     stopInteract(initiator) {
-        if (initiator.getPotionType() !== PotionTypes.Result) {
-            cc.systemEvent.emit(GameEvent.HIDE_BUBBLE);
-        }
+    },
+
+    instantInteract() {
+        cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients) => { 
+            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node.position, ingridients);
+        });
+    },
+
+    stopInstantInteract() {
+        cc.systemEvent.emit(GameEvent.HIDE_BUBBLE);
     },
 
 	_handleSubscription(isOn) {
@@ -58,8 +74,6 @@ cc.Class({
             .start();
     },
 
-    // принимает в качестве аргумента функцию обработчик, в которую в свою очередь передается массив
-    // элементов в двумя свойствами: potionType (тип данных PotionType) и _isDelivered (тип данных Boolean)
     onPotionWasted() {
         this._escape();
     }

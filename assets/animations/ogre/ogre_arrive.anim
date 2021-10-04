@@ -1,0 +1,44 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "ogre_arrive",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1,
+  "sample": 60,
+  "speed": 0.1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            -410,
+            353.108,
+            0
+          ]
+        },
+        {
+          "frame": 1,
+          "value": [
+            -410,
+            -188.628,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "frame": 0,
+      "func": "onWalkStart",
+      "params": []
+    },
+    {
+      "frame": 1,
+      "func": "onWalkEnd",
+      "params": []
+    }
+  ]
+}

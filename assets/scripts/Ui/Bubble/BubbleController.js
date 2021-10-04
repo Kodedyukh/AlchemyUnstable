@@ -113,8 +113,8 @@ cc.Class({
         this.shadowGraphics.lineTo(x + 5, y - 5);
     },
 
-    onShowBubble(position) {
-        this.node.setPosition(position);//.add(this.offset));
+    onShowBubble(position, ingridients, offset) {
+        this.node.setPosition(position.add(offset || cc.Vec2.ZERO));//.add(this.offset));
         this.node.opacity = 255;
         
         if (this._ingredientNodes) {
@@ -124,7 +124,8 @@ cc.Class({
         }
         this._ingredientNodes = [];
 
-        cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients)=>{ this._setIngridients(ingridients) });
+        //cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients)=>{ this._setIngridients(ingridients) });
+        this._setIngridients(ingridients);
         this._drawGraphics();
     },
 

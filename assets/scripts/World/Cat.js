@@ -1,5 +1,16 @@
 import CollisionGroups from 'CollisionGroups';
 
+const CatDirections = [
+    cc.v2(0, 1),
+    cc.v2(1, 0),
+    cc.v2(0, -1),
+    cc.v2(-1, 0),
+    cc.v2(1, 1),
+    cc.v2(1, -1),
+    cc.v2(-1, 1),
+    cc.v2(-1, -1),
+];
+
 cc.Class({
     extends: cc.Component,
 
@@ -13,6 +24,8 @@ cc.Class({
         rageTestCoolDown: 10,
 
         _currentDirection: { default: null, serializable: false },
+        _currentMoveVector: { default: null, serializable: false },
+
         _isMoveEnable: { default: true, serializable: false },
 
         _body: { default: null, serializable: false },
@@ -27,12 +40,13 @@ cc.Class({
         this._body = this.getComponent(cc.RigidBody);
         this.skeleton.setAnimation(0, 'idle', true);
 
+        this._currentDirection = this.startDirection;
         this._setDirection(this.startDirection);
     },
 
     update(dt) {
-        if (this._isMoveEnable && this._body && this._currentDirection) {
-            const velocity = this._currentDirection.mul(this.speed);
+        if (this._isMoveEnable && this._body && this._currentMoveVector) {
+            const velocity = this._currentMoveVector.mul(this.speed);
 
             this._body.linearVelocity = velocity;
         }
@@ -62,14 +76,21 @@ cc.Class({
         }
     },
 
-    _setDirection(direction, callback) {
-        this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
-        const directionAngle = Math.atan2(direction.y, direction.x);
+    _setDirection(direction) {
+        const directionAngle = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
+
+        if (this.node.angle !== directionAngle) {
+            this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
+        }
+
         cc.tween(this.node)
-            .to(1, { angle: directionAngle * 180 / Math.PI })
+            .to(1, { angle: directionAngle })
             .call(() => {
-                this._currentDirection = direction;
-                callback instanceof Function && callback();
+                this._currentMoveVector = direction;
+                this._isMoveEnable = true;
+
+                this.skeleton.timeScale = this._rageMode ? 2 : 1;
+                this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
             })
             .start();
     },
@@ -85,6 +106,8 @@ cc.Class({
 
     onBeginContact(contact, self, other) {
 
+        if (!this._isMoveEnable) return;
+        
         const otherGroupName = other.node.group;
 
         if (self.tag === 0) {
@@ -95,18 +118,15 @@ cc.Class({
                     this._isMoveEnable = false;
                     this.skeleton.timeScale = 1;
                     this._currentAnimation = this.skeleton.setAnimation(0, 'idle', true);
-                    const reverseCurrentDirection = this._currentDirection.neg();
+
+                    const validDirections = CatDirections.filter(d => d.x !== this._currentDirection.x && d.y !== this._currentDirection.y);
+                    this._currentDirection = validDirections[Math.round((validDirections.length - 1) * Math.random())];
+                    const reverseCurrentDirection = this._currentDirection;//this._currentDirection.neg();
 
                     this.scheduleOnce(()=>{
                         this._body.linearVelocity = cc.Vec2.ZERO;
                         this._setDirection(
-                            cc.v2(this._getRandomValue(reverseCurrentDirection.x), this._getRandomValue(reverseCurrentDirection.y)).normalizeSelf(),
-                            () => {
-                                this._isMoveEnable = true;
-                                this.skeleton.timeScale = this._rageMode ? 2 : 1;
-                                this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
-                            }
-                        );
+                            cc.v2(this._getRandomValue(reverseCurrentDirection.x), this._getRandomValue(reverseCurrentDirection.y)).normalizeSelf());
                     }, 1)
 
                     break;

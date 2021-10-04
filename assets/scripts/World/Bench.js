@@ -88,6 +88,7 @@ cc.Class({
                 cc.log('potion is unstable');
             } else {
                 targetIngredient._isDelivered = true;
+                this.instantInteract();
                 this._checkCurrentOrder();
             }
         } else {
@@ -96,6 +97,19 @@ cc.Class({
                 cc.log('potion is stable');
             }
         }
+    },
+
+    instantInteract() {
+        const currentOrder = this.orders[this._currentOrder];
+        const deliveredIngredients = currentOrder.ingridients.filter(i => i._isDelivered);
+
+        if (deliveredIngredients.length) {
+            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node.position, deliveredIngredients, cc.v2(50, 0));
+        }
+    },
+
+    stopInstantInteract() {
+        cc.systemEvent.emit(GameEvent.HIDE_BUBBLE);
     },
 
 	_handleSubscription(isOn) {
@@ -110,6 +124,7 @@ cc.Class({
         if (currentOrder.ingridients.filter(i => !i._isDelivered).length === 0 || fail) {
             if (!fail) {
                 cc.systemEvent.emit(GameEvent.POTION_IS_READY);
+                this.stopInstantInteract();
             }
             
             if (++this._currentOrder >= this.orders.length) {
@@ -118,6 +133,7 @@ cc.Class({
         } else {
             if (Math.random() * 100 < this.unstableChance) {
                 this._isUnstable = true;
+                this.stopInstantInteract();
                 cc.log('potion is unstable');
             }
         }

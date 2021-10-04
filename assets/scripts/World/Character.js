@@ -329,11 +329,17 @@ cc.Class({
 				case CollisionGroups.Visitor: {
 					if (this.getPotionType() !== PotionTypes.Result) {
 						cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER_INDEX, (index) => {
-							if (interact && interact.visitorIndex === index && !this.interactionAreas.includes(interact)) {
+							/*if (interact && interact.visitorIndex === index && !this.interactionAreas.includes(interact)) {
 								this.interactionAreas = this.interactionAreas.concat(interact);
+							}*/
+							if (interact && interact.visitorIndex === index) {
+								interact.instantInteract();
 							}
 						});
 					}
+				} break;
+				case CollisionGroups.Bench: {
+					interact && interact.instantInteract();
 				} break;
 			}
 		}
@@ -344,9 +350,11 @@ cc.Class({
 			const otherGroupName = other.node.group;
 			switch(otherGroupName){
 				case CollisionGroups.PotionFactory:
-				case CollisionGroups.Visitor: {
+				case CollisionGroups.Visitor: 
+				case CollisionGroups.Bench: {
 					if (interact) {
 						this.interactionAreas = this.interactionAreas.filter(a => a !== interact);
+						interact.stopInstantInteract();
 					}
 				} break;
 			}

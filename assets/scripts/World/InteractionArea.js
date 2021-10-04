@@ -16,5 +16,9 @@ cc.Class({
 
     interact(initiator) {},
 
-    stopInteract(initiator) {}
+    stopInteract(initiator) {},
+    
+    instantInteract(initiator) {},
+
+    stopInstantInteract(initiator) {}
 });
