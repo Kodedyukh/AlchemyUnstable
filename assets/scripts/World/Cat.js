@@ -86,11 +86,15 @@ cc.Class({
         cc.tween(this.node)
             .to(1, { angle: directionAngle })
             .call(() => {
-                this._currentMoveVector = direction;
-                this._isMoveEnable = true;
+                if (this._isColliding) {
+                    this._calculateNewDirection();
+                } else {
+                    this._currentMoveVector = direction;
+                    this._isMoveEnable = true;
 
-                this.skeleton.timeScale = this._rageMode ? 2 : 1;
-                this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
+                    this.skeleton.timeScale = this._rageMode ? 2 : 1;
+                    this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
+                }
             })
             .start();
     },
@@ -104,30 +108,32 @@ cc.Class({
         return currentValue;
     },
 
-    onBeginContact(contact, self, other) {
+    _calculateNewDirection() {
+        this._isMoveEnable = false;
+        this.skeleton.timeScale = 1;
+        this._currentAnimation = this.skeleton.setAnimation(0, 'idle', true);
 
-        if (!this._isMoveEnable) return;
-        
+        const validDirections = CatDirections.filter(d => d.x !== this._currentDirection.x && d.y !== this._currentDirection.y);
+        this._currentDirection = validDirections[Math.round((validDirections.length - 1) * Math.random())];
+        const reverseCurrentDirection = this._currentDirection;//this._currentDirection.neg();
+
+        this.scheduleOnce(()=>{
+            this._body.linearVelocity = cc.Vec2.ZERO;
+            this._setDirection(
+                cc.v2(this._getRandomValue(reverseCurrentDirection.x), this._getRandomValue(reverseCurrentDirection.y)).normalizeSelf());
+        }, 1);
+    },
+
+    onBeginContact(contact, self, other) {
         const otherGroupName = other.node.group;
 
         if (self.tag === 0) {
             switch(otherGroupName){
                 case CollisionGroups.Wall:
                 case CollisionGroups.PotionFactory:
-
-                    this._isMoveEnable = false;
-                    this.skeleton.timeScale = 1;
-                    this._currentAnimation = this.skeleton.setAnimation(0, 'idle', true);
-
-                    const validDirections = CatDirections.filter(d => d.x !== this._currentDirection.x && d.y !== this._currentDirection.y);
-                    this._currentDirection = validDirections[Math.round((validDirections.length - 1) * Math.random())];
-                    const reverseCurrentDirection = this._currentDirection;//this._currentDirection.neg();
-
-                    this.scheduleOnce(()=>{
-                        this._body.linearVelocity = cc.Vec2.ZERO;
-                        this._setDirection(
-                            cc.v2(this._getRandomValue(reverseCurrentDirection.x), this._getRandomValue(reverseCurrentDirection.y)).normalizeSelf());
-                    }, 1)
+                    
+                    this._isColliding = true;
+                    if (this._isMoveEnable) this._calculateNewDirection();
 
                     break;
 
@@ -135,6 +141,23 @@ cc.Class({
                     break;
             }
         }
-
     },  
+
+    onEndContact(contact, self, other) {
+        const otherGroupName = other.node.group;
+
+        if (self.tag === 0) {
+            switch(otherGroupName){
+                case CollisionGroups.Wall:
+                case CollisionGroups.PotionFactory:
+                    
+                    this._isColliding = false;
+
+                    break;
+
+                default: 
+                    break;
+            }
+        }
+    }
 });

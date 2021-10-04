@@ -56,6 +56,8 @@ cc.Class({
 		orderIndex: { default: null, visible: false },
 
 		_sprite: { default: null, serializable: false },
+		_effectNode: { default: null, serializable: false },
+
 		_animation: {default: null, serializable: false},
 		_collider: {default: null, serializable: false}
 	},
@@ -63,10 +65,13 @@ cc.Class({
 	// LIFE-CYCLE CALLBACKS:
 
 	onLoad () {
-		this._sprite = this.renderNode.getComponent(cc.Sprite);
+		this._sprite = this.renderNode.getChildByName('Sprite').getComponent(cc.Sprite);
+		this._effectNode = this.renderNode.getChildByName('Effect');
+
 		this._animation = this.renderNode.getComponent(cc.Animation);
 		this._collider = this.getComponent(cc.PhysicsCircleCollider);
-		this.node.opacity = 0;
+		
+		this._effectNode.opacity = 0;
 
 		if (this._animation) {
 			this._animation.on('finished', this.shakeEnd, this);

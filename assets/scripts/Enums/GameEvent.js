@@ -41,5 +41,8 @@ export default cc.Enum({
 
     //Bubble
     SHOW_BUBBLE: 4000,
-    HIDE_BUBBLE: 4001
+    HIDE_BUBBLE: 4001,
+
+    //Timer
+    START_TIMER: 5000
 });

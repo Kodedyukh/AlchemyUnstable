@@ -3,7 +3,7 @@
   "_name": "ogre_arrive",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1,
+  "_duration": 1.5,
   "sample": 60,
   "speed": 0.1,
   "wrapMode": 1,
@@ -14,15 +14,15 @@
           "frame": 0,
           "value": [
             -410,
-            353.108,
+            350,
             0
           ]
         },
         {
-          "frame": 1,
+          "frame": 1.5,
           "value": [
-            -410,
-            -188.628,
+            -420,
+            -190,
             0
           ]
         }
@@ -36,7 +36,7 @@
       "params": []
     },
     {
-      "frame": 1,
+      "frame": 1.5,
       "func": "onWalkEnd",
       "params": []
     }
