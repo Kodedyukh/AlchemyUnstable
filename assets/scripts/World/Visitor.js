@@ -1,4 +1,5 @@
 import GameEvent from 'GameEvent';
+import AudioTypes from'AudioTypes';
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
 
@@ -123,6 +124,7 @@ cc.Class({
             initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
 
             cc.systemEvent.emit(GameEvent.ORDER_COMPLITED);
+            cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Mumble);
         } 
     },
 

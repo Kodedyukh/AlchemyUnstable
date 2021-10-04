@@ -1,4 +1,5 @@
 import GameEvent from 'GameEvent';
+import AudioTypes from 'AudioTypes';
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
 
@@ -64,6 +65,9 @@ cc.Class({
             this._unstableTimer -= dt;
             if (this._unstableTimer < 0) {
                 cc.systemEvent.emit(GameEvent.POTION_WASTED, this._currentOrder);
+                cc.systemEvent.emit(GameEvent.HP_MINUS);
+                cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BenchExplosion);
+
                 this._isUnstable = false;
                 this._checkCurrentOrder(true);
                 cc.log('potion wasted');
@@ -85,9 +89,15 @@ cc.Class({
             const targetIngredient = this.orders[this._currentOrder].ingridients.find(i => !i._isDelivered);
             if (deliveredPotionType !== targetIngredient.potionType) {
                 this._isUnstable = true;
+                cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BottleScratch);
                 cc.log('potion is unstable');
             } else {
                 targetIngredient._isDelivered = true;
+
+                this.scheduleOnce(() => {
+                    cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.PutBottle);
+                }, .2);
+
                 this.instantInteract();
                 this._checkCurrentOrder();
             }
@@ -125,6 +135,7 @@ cc.Class({
         if (currentOrder.ingridients.filter(i => !i._isDelivered).length === 0 || fail) {
             if (!fail) {
                 cc.systemEvent.emit(GameEvent.POTION_IS_READY);
+                cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Fanfare);
                 this.stopInstantInteract();
             }
             
@@ -134,6 +145,7 @@ cc.Class({
         } else {
             if (Math.random() * 100 < this.unstableChance) {
                 this._isUnstable = true;
+                cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BottleScratch);
                 this.stopInstantInteract();
                 cc.log('potion is unstable');
             }

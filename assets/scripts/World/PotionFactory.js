@@ -1,5 +1,7 @@
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
+import GameEvent from 'GameEvent';
+import AudioTypes from 'AudioTypes';
 
 cc.Class({
     extends: InteractionArea,
@@ -22,6 +24,7 @@ cc.Class({
     interact(initiator) {
         if (this._hasPotions && !initiator.hasPotion()) {
             initiator.setPotionType(this.potionType);
+            cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.PutBottle);
             initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
         }
     }

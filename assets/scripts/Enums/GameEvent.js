@@ -29,6 +29,8 @@ export default cc.Enum({
     
     //Sound
     SOUND_ACTIVE: 1500,
+    PLAY_AUDIO: 1501,
+    STOP_AUDIO: 1502,
 
     //Potion
     POTION_WASTED: 2000,

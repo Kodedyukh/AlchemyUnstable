@@ -2,6 +2,7 @@ import CollisionGroups from 'CollisionGroups';
 import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
 import GameEvent from 'GameEvent';
+import AudioTypes from 'AudioTypes';
 
 const PotionTypeRender = cc.Class({
 	name: 'PotionTypeRender',
@@ -98,12 +99,14 @@ cc.Class({
 
 	_launchExplodeTimer() {
 		this._animation.play();
+		cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BottleScratch);
 
 		//this.scheduleOnce(this._destroy, 1.5);
 	},
 
 	_stopExplodeTimer() {
 		this._animation.stop();
+		cc.systemEvent.emit(GameEvent.STOP_AUDIO, AudioTypes.BottleScratch);
 
 		//this.renderNode.setPosition(cc.v2());
 		//this.renderNode.angle = 0;
@@ -118,6 +121,9 @@ cc.Class({
 		}
 
 		this.holder.setPotionType(PotionTypes.None);
+
+		cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Glass);
+		cc.systemEvent.emit(GameEvent.STOP_AUDIO, AudioTypes.BottleScratch);
 	},
 
 	onBeginContact(contact, self, other) {
@@ -147,6 +153,7 @@ cc.Class({
 				break;
 
 			case CollisionGroups.Cat:
+				cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Cat);
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
 					this._launchExplodeTimer();
