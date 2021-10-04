@@ -20,11 +20,11 @@ cc.Class({
         const visitor = cc.instantiate(this.visitorPrefab);
         visitor.setParent(this.node);
         visitor.setPosition(cc.v2(-270, -132));
-        visitor.angle = 90;
 
         const visitorComp = visitor.getComponent(Visitor);
         visitorComp.status = 2;
         visitorComp.visitorIndex = this._visitorCount++;
+        visitorComp.rotator.angle = 90;
 
         this._handleSubscription(true);
 

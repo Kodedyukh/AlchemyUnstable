@@ -13,16 +13,32 @@ const VisitorSkins = [
     'mushroom_ogre'
 ];
 
+const SkeletonSettingsHelper = cc.Class({
+    name: 'SkeletonSettingsHelper',
+    
+    properties: {
+        data: { default: null, type: sp.Skeleton },
+        skins: { default: [], type: cc.String },
+        useSpineRotation: false
+    }
+});
+
 cc.Class({
     extends: InteractionArea,
 
     properties: {
-        visitorIndex: 0,
-        skeleton: { default: null, type: sp.Skeleton },
-        status: { default: VisitorStatus.Arriving, type: VisitorStatus },
+        visitorIndex: { default: 0, visible: false },
+        rotator: { default: null, type: cc.Node },
+        skeletonSettings: {
+            default: [],
+            type: SkeletonSettingsHelper
+        },
+        skeleton: { default: null, type: sp.Skeleton, visible: false },
+        status: { default: VisitorStatus.Arriving, type: VisitorStatus, visible: false },
 
         _isMoving: { default: false, serializable: false },
-        _animation: { default: null, serializable: false }
+        _animation: { default: null, serializable: false },
+        _baseTurning: { default: null, serializable: false },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -30,7 +46,18 @@ cc.Class({
     onLoad () {
         this._animation = this.getComponent(cc.Animation);
 
-        this.skeleton.setSkin(VisitorSkins[Math.round((VisitorSkins.length - 1) * Math.random())]);
+        const skeletonSettings = this.skeletonSettings[Math.round((this.skeletonSettings.length - 1) * Math.random())];
+        
+        this.skeleton = skeletonSettings.data;
+        this.skeleton.node.active = true;
+        this.skeleton.setSkin(skeletonSettings.skins[Math.round((skeletonSettings.skins.length - 1) * Math.random())]);
+
+        if (skeletonSettings.useSpineRotation) {
+            this._baseTurning = this.skeleton.setAnimation(1, 'turn_360', true);
+            if (this._baseTurning) {
+                this._baseTurning.timeScale = 0;
+            }
+        }
 
         this._handleSubscription(true);
 
@@ -41,6 +68,12 @@ cc.Class({
     },
 
     update (dt) {
+        if (this._baseTurning) { 
+            const angle = (this.rotator.angle % 360 + 360) % 360;
+            this._baseTurning.trackTime = angle / 360 * 2;
+        } else {
+            this.node.angle = this.rotator.angle;
+        }
     },
 
     onWalkStart() {

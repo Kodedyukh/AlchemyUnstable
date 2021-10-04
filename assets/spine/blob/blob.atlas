@@ -1,0 +1,34 @@
+
+blob.png
+size: 578,387
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 2, 2
+  size: 383, 470
+  orig: 383, 470
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 474, 44
+  size: 179, 74
+  orig: 179, 74
+  offset: 0, 0
+  index: -1
+pupil
+  rotate: false
+  xy: 474, 17
+  size: 55, 25
+  orig: 55, 25
+  offset: 0, 0
+  index: -1
+up_part
+  rotate: true
+  xy: 474, 225
+  size: 160, 102
+  orig: 160, 102
+  offset: 0, 0
+  index: -1

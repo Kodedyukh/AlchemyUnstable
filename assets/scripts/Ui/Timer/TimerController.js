@@ -10,6 +10,8 @@ cc.Class({
     
         render: { default: null, type: cc.Sprite },
         backRender: { default: null, type: cc.Sprite },
+        
+        _tween: { default: null, serializable: false },
     },
 
     onLoad() {
@@ -42,32 +44,34 @@ cc.Class({
         cc.tween(this.node).to(.5, { opacity: 255 }).start();
     },
 
-    _endCallback() {
+    _endCallback(force) {
         cc.tween(this.node).to(.5, { opacity: 0 })
             .call(() => {
                 this.node.active = false;
+                if (this._tween) this._tween.stop();
+
                 this.render.fillRange = 1;
                 this.backRender.fillRange = 1;
-                cc.systemEvent.emit(GameEvent.POTION_WASTED);
+                !force && cc.systemEvent.emit(GameEvent.POTION_WASTED);
             })
             .start();
     },
 
     onPotionWasted() {
-        this.node.active && this._endCallback();
+        this.node.active && this._endCallback(true);
     },
     
     onOrderComplited() {
-        this.node.active && this._endCallback();
+        this.node.active && this._endCallback(true);
     },
     
     onStartTimer() {
         if (this.render) {
-            cc.tween(this.render)
-                .call(() => { this._startCallback() })
+            this._tween = cc.tween(this.render);
+            this._tween.call(() => { this._startCallback() })
                 .to(this.timeForTimer, { fillRange: 0 })
                 .call(() => { this._endCallback() })
-                .start()
+                .start();
         }
     },
 });

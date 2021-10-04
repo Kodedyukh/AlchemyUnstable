@@ -490,7 +490,7 @@
 			{ "time": 11.9667, "name": "idle_end" }
 		]
 	},
-	"rotate_360": {
+	"turn_360": {
 		"bones": {
 			"ROTATE_BONE": {
 				"rotate": [
