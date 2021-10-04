@@ -56,6 +56,21 @@ cc.Class({
 			type: PotionTypeRender
 		},
 
+		touchEffect: {
+			default: null,
+			type: cc.ParticleSystem
+		},
+
+		levelNode: {
+			default: null,
+			type: cc.Node
+		},
+
+		bottleDropPrefab: {
+			default: null,
+			type: cc.Prefab
+		},
+
 		holder: { default: null, visible: false },
 		orderIndex: { default: null, visible: false },
 
@@ -99,11 +114,19 @@ cc.Class({
 	_launchExplodeTimer() {
 		this._animation.play();
 
+		if (this.touchEffect) {
+			this.touchEffect.resetSystem();
+		}
+
 		//this.scheduleOnce(this._destroy, 1.5);
 	},
 
 	_stopExplodeTimer() {
 		this._animation.stop();
+
+		if (this.touchEffect) {
+			this.touchEffect.stopSystem();
+		}
 
 		//this.renderNode.setPosition(cc.v2());
 		//this.renderNode.angle = 0;
@@ -115,6 +138,15 @@ cc.Class({
 		if (this.type === PotionTypes.Result) {
 			cc.systemEvent.emit(GameEvent.POTION_CRASHED, this.orderIndex);
 			cc.systemEvent.emit(GameEvent.HP_MINUS);
+		}
+
+		if (this.levelNode && this.bottleDropPrefab) {
+			const globalPos = this.renderNode.convertToWorldSpaceAR(cc.v2());
+			const localPos = this.levelNode.convertToNodeSpaceAR(globalPos);
+
+			const effect = cc.instantiate(this.bottleDropPrefab);
+			effect.parent = this.levelNode;
+			effect.setPosition(localPos);
 		}
 
 		this.holder.setPotionType(PotionTypes.None);

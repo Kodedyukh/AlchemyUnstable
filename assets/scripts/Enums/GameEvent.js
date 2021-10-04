@@ -20,9 +20,9 @@ export default cc.Enum({
     PUSH_BUTTON_PRESSED: 17,
     PUSH_BUTTON_RELEASED: 18,
 
-    MOUSE_DOWN: 21,
-    MOUSE_MOVE: 22,
-    MOUSE_UP: 23,
+    HELP_PAGE_FORWARD: 21,
+    HELP_PAGE_BACK: 22,
+    HELP_PAGE_OFF: 23,
 
     //Pause
     TOGGLE_PAUSE: 1301,

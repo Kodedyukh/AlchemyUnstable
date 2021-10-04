@@ -1,7 +1,7 @@
 {
   "title": "AlchemyUnstable",
   "packageName": "org.cocos2d.demo",
-  "startScene": "096895af-e295-4eb2-b3a1-0c8659954aa3",
+  "startScene": "9c428d89-0498-48be-8058-d02c4f4db6e5",
   "excludeScenes": [
     "67ea8403-c512-434f-9851-72d80d14c5b1",
     "b043636d-f5f8-4e86-93b3-44cf42604fe0"

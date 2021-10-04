@@ -24,7 +24,16 @@ cc.Class({
 		_rotateClockwisePressed: false,
 		_rotateCounterClockPressed: false,
 		_pushPotionPressed: false,
-		_pullPotionPressed: false
+		_pullPotionPressed: false,
+
+		_helpPageOn: true,
+
+
+        coolDownTime: {
+            default: 2,
+        },
+
+        _isCool: false
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -33,9 +42,9 @@ cc.Class({
 		cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
 		cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
 
-		this.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
-		this.node.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
-		this.node.on(cc.Node.EventType.MOUSE_UP, this.onMouseUp, this);
+		this.scheduleOnce(() => {
+			this._isCool = true;
+		}, this.coolDownTime);
 	},
 
 	start () {
@@ -45,7 +54,11 @@ cc.Class({
 	// update (dt) {},
 
 	onKeyDown: function (event) {
+
+		if (this._helpPageOn) return;
+
 		switch(event.keyCode) {
+
 			case cc.macro.KEY[this.topButton]:
 
 				if (!this._topButtonPressed) {
@@ -133,94 +146,110 @@ cc.Class({
 	},
 
 	onKeyUp: function (event) {
-		switch(event.keyCode) {
-			case cc.macro.KEY[this.topButton]:
-				cc.systemEvent.emit(GameEvent.UP_BUTTON_RELEASED);
 
-				if (this._topButtonPressed) {
-					this._topButtonPressed = false;
+		if (this._helpPageOn) {
 
-				}
-				break;
+			switch(event.keyCode) {
+				case cc.macro.KEY.left:
+					cc.systemEvent.emit(GameEvent.HELP_PAGE_BACK);
+					break;
 
-			case cc.macro.KEY[this.downButton]:
-				cc.systemEvent.emit(GameEvent.DOWN_BUTTON_RELEASED);
+				case cc.macro.KEY.right:
+					cc.systemEvent.emit(GameEvent.HELP_PAGE_FORWARD);
+					break;
 
-				if (this._downButtonPressed) {
-					this._downButtonPressed = false;
-
-				}
-				break;
-
-			case cc.macro.KEY[this.leftButton]:
-				cc.systemEvent.emit(GameEvent.LEFT_BUTTON_RELEASED);
-
-				if (this._leftButtonPressed) {
-					this._leftButtonPressed = false;
-
-				}
-				break;
-
-			case cc.macro.KEY[this.rightButton]:
-				cc.systemEvent.emit(GameEvent.RIGHT_BUTTON_RELEASED);
-
-				if (this._rightButtonPressed) {
-					this._rightButtonPressed = false;
+				case cc.macro.KEY.e:
+					if (this._isCool) {
+						cc.systemEvent.emit(GameEvent.HELP_PAGE_OFF);
+						this._helpPageOn = false;
+					}
 					
-				}
-				break;
+					break;
+			}
 
-			case cc.macro.KEY[this.useButton]:
-				cc.systemEvent.emit(GameEvent.USE_BUTTON_RELEASED);
-				if (this._useButtonPressed) {
-					this._useButtonPressed = false;
-				}
-				break;
+		} else {
 
-			case cc.macro.KEY[this.runButton]:
-				cc.systemEvent.emit(GameEvent.RUN_BUTTON_RELEASED);
-				if (this._runButtonPressed) {
-					this._runButtonPressed = false;
-				}
-				break;
+			switch(event.keyCode) {
+				case cc.macro.KEY[this.topButton]:
+					cc.systemEvent.emit(GameEvent.UP_BUTTON_RELEASED);
 
-			case cc.macro.KEY[this.rotateClockwiseButton]:
-				cc.systemEvent.emit(GameEvent.ROTATE_BUTTON_RELEASED, -1);
-				if (this._rotateClockwisePressed) {
-					this._rotateClockwisePressed = false;
-				}
-				break;
+					if (this._topButtonPressed) {
+						this._topButtonPressed = false;
 
-			case cc.macro.KEY[this.rotateCounterclockButton]:
-				cc.systemEvent.emit(GameEvent.ROTATE_BUTTON_RELEASED, 1);
-				if (this._rotateCounterClockPressed) {
-					this._rotateCounterClockPressed = false;
-				}
-				break;
+					}
+					break;
 
-			case cc.macro.KEY[this.pullPotionButton]:
-				cc.systemEvent.emit(GameEvent.PULL_BUTTON_RELEASED);
-				if (this._pullPotionPressed) {
-					this._pullPotionPressed = false;
-				}
-				break;
+				case cc.macro.KEY[this.downButton]:
+					cc.systemEvent.emit(GameEvent.DOWN_BUTTON_RELEASED);
 
-			case cc.macro.KEY[this.pushPotionButton]:
-				cc.systemEvent.emit(GameEvent.PUSH_BUTTON_RELEASED);
-				if (this._pushPotionPressed) {
-					this._pushPotionPressed = false;
-				}
-				break;
+					if (this._downButtonPressed) {
+						this._downButtonPressed = false;
+
+					}
+					break;
+
+				case cc.macro.KEY[this.leftButton]:
+					cc.systemEvent.emit(GameEvent.LEFT_BUTTON_RELEASED);
+
+					if (this._leftButtonPressed) {
+						this._leftButtonPressed = false;
+
+					}
+					break;
+
+				case cc.macro.KEY[this.rightButton]:
+					cc.systemEvent.emit(GameEvent.RIGHT_BUTTON_RELEASED);
+
+					if (this._rightButtonPressed) {
+						this._rightButtonPressed = false;
+						
+					}
+					break;
+
+				case cc.macro.KEY[this.useButton]:
+					cc.systemEvent.emit(GameEvent.USE_BUTTON_RELEASED);
+					if (this._useButtonPressed) {
+						this._useButtonPressed = false;
+					}
+					break;
+
+				case cc.macro.KEY[this.runButton]:
+					cc.systemEvent.emit(GameEvent.RUN_BUTTON_RELEASED);
+					if (this._runButtonPressed) {
+						this._runButtonPressed = false;
+					}
+					break;
+
+				case cc.macro.KEY[this.rotateClockwiseButton]:
+					cc.systemEvent.emit(GameEvent.ROTATE_BUTTON_RELEASED, -1);
+					if (this._rotateClockwisePressed) {
+						this._rotateClockwisePressed = false;
+					}
+					break;
+
+				case cc.macro.KEY[this.rotateCounterclockButton]:
+					cc.systemEvent.emit(GameEvent.ROTATE_BUTTON_RELEASED, 1);
+					if (this._rotateCounterClockPressed) {
+						this._rotateCounterClockPressed = false;
+					}
+					break;
+
+				case cc.macro.KEY[this.pullPotionButton]:
+					cc.systemEvent.emit(GameEvent.PULL_BUTTON_RELEASED);
+					if (this._pullPotionPressed) {
+						this._pullPotionPressed = false;
+					}
+					break;
+
+				case cc.macro.KEY[this.pushPotionButton]:
+					cc.systemEvent.emit(GameEvent.PUSH_BUTTON_RELEASED);
+					if (this._pushPotionPressed) {
+						this._pushPotionPressed = false;
+					}
+					break;
+			}
+
 		}
-	},
-
-	onMouseDown(event) {
-		cc.systemEvent.emit(GameEvent.MOUSE_DOWN, cc.v2(event._x, event._y));
-	},
-	onMouseMove(event) {
-		cc.systemEvent.emit(GameEvent.MOUSE_MOVE, cc.v2(event._x, event._y));
-	},
-	onMouseUp(event) {
-		cc.systemEvent.emit(GameEvent.MOUSE_UP, cc.v2(event._x, event._y));
-	},
+		
+	}
 });
