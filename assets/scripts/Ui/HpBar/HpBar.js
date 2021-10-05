@@ -31,10 +31,12 @@ cc.Class({
 	},
 
     onHpMinus() {
-        this._hearts.pop().getComponent(cc.Animation).play();
+        if (this._hearts.length) {
+            this._hearts.pop().getComponent(cc.Animation).play();
 
-        if (this._hearts.length === 0) {
-            cc.systemEvent.emit(GameEvent.GAME_OVER);
+            if (this._hearts.length === 0) {
+                cc.systemEvent.emit(GameEvent.GAME_OVER);
+            }
         }
     }
 
