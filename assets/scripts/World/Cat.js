@@ -38,6 +38,7 @@ cc.Class({
         _rageTestTimer: { default: 0, serializable: false },
 
         _collider: { default: null, serializable: false },
+        _movingTimer: { default: 0, serializable: false },
     },
 
     onEnable() {
@@ -49,10 +50,14 @@ cc.Class({
     },
 
     update(dt) {
-        if (this._isMoveEnable && this._body && this._currentMoveVector) {
-            const velocity = this._currentMoveVector.mul(this.speed);
+        if (this._isMoveEnable) { 
+            this._movingTimer += dt;
 
-            this._body.linearVelocity = velocity;
+            if (this._body && this._currentMoveVector) {
+                const velocity = this._currentMoveVector.mul(this.speed);
+
+                this._body.linearVelocity = velocity;
+            }
         }
 
         if (this._rageMode) {
@@ -77,6 +82,11 @@ cc.Class({
                 }
                 this._rageTestTimer = 0;
             }
+        }
+
+        if (this._movingTimer > 10) {
+            this._calculateNewDirection();
+            this._movingTimer = 0;
         }
     },
 
