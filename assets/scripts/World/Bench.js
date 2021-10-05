@@ -167,6 +167,10 @@ cc.Class({
 				cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BottleScratch);
                 this.stopInstantInteract();
 				cc.log('potion is unstable');
+
+				if (this.unstableEffect) {
+					this.unstableEffect.resetSystem();
+				}
 			}
 		}
 		cc.log('current order', this._currentOrder);

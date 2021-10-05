@@ -15,6 +15,7 @@ cc.Class({
 
     properties: {
         //offset: { default: cc.v2(0, 50) },
+        plusPrefab: { default: null, type: cc.Prefab },
         potions: { default: [], type: PotionRenderHelper },
         potionOffset: { default: cc.v2(20, 0) },
         startPosition: { default: cc.v2(0, 0) },
@@ -43,18 +44,26 @@ cc.Class({
     },
 
     _setIngridients(ingridients) {
-        ingridients.forEach((ingridient, index) => {
-            const ingridientNode = new cc.Node('Ingridient');            
-            const ingridientSprite = ingridientNode.addComponent(cc.Sprite);
+        ingridients.forEach((ingridient, index, array) => {
+            //const ingridientNode = new cc.Node('Ingridient');            
+            //const ingridientSprite = ingridientNode.addComponent(cc.Sprite);
+            
+            const ingridientNode = cc.instantiate(this.plusPrefab);
+            const ingridientSprite = ingridientNode.getChildByName('Render').getComponent(cc.Sprite);
             
             const currentPotion = this.potions.find(potion => ingridient.potionType === potion.type);
             ingridientSprite.spriteFrame = currentPotion.spriteFrame;
 
-            ingridientNode.parent = this.node;
-            ingridientNode.setScale(0.35);
-            ingridientNode.zIndex = 2; 
+            const plus = ingridientNode.getChildByName('Plus');
+            if (index === array.length - 1) {
+               plus.active = false;
+            } else {
+                plus.angle = -10 + Math.random() * 20;
+            }
 
-            const position = cc.v2(this.startPosition.x + this.potionOffset.x * index, this.startPosition.y + this.potionOffset.y * index );
+            ingridientNode.setParent(this.node);
+
+            const position = cc.v2(this.startPosition.x + this.potionOffset.x * index, this.startPosition.y);
             ingridientNode.setPosition(position);
 
             this._ingredientNodes.push(ingridientNode);
@@ -70,13 +79,13 @@ cc.Class({
             const potionNode = this._ingredientNodes[0];
             const semiHeight = potionNode.height / 2 * potionNode.scaleY + padding;
             const semiWidth = potionNode.width / 2 * potionNode.scaleX + padding;
-            const bubbleWidth = (this._ingredientNodes.length * semiWidth + this.potionOffset.x) - this.potionOffset.x;
+            const bubbleWidth = (this.potionOffset.x * (this._ingredientNodes.length - 1));// * semiWidth + this.potionOffset.x) - this.potionOffset.x;
             const rad = Math.PI / 180;
 
             this.graphics.moveTo(0, this.startPosition.y - semiHeight * 2);
             this.shadowGraphics.moveTo(0, this.startPosition.y - semiHeight * 2);
 
-            this._drawLine(5, this.startPosition.y - semiHeight);
+            this._drawLine(0, this.startPosition.y - semiHeight);
             
             
             this._drawLine(-semiWidth + padding, this.startPosition.y - semiHeight);
@@ -95,7 +104,7 @@ cc.Class({
             this._drawLine(bubbleWidth + semiWidth - padding / 3, this.startPosition.y - semiHeight + padding / 3);
             this._drawLine(bubbleWidth + semiWidth - padding, this.startPosition.y - semiHeight);
 
-            this._drawLine(20, this.startPosition.y - semiHeight);
+            this._drawLine(10, this.startPosition.y - semiHeight);
 
             this.graphics.lineTo(0, this.startPosition.y - semiHeight * 2);
             this.shadowGraphics.lineTo(0, this.startPosition.y - semiHeight * 2);
