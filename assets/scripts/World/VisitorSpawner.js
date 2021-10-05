@@ -28,9 +28,9 @@ cc.Class({
 
         this._handleSubscription(true);
 
-        this.scheduleOnce(() => {
-            cc.systemEvent.emit(GameEvent.START_TIMER);
-        }, 1.5);
+        // this.scheduleOnce(() => {
+        //     cc.systemEvent.emit(GameEvent.START_TIMER);
+        // }, 3.5);
     },
 
     start () {
@@ -58,6 +58,9 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.POTION_CRASHED, this.onPotionCrashed, this);
 		cc.systemEvent[func](GameEvent.ORDER_COMPLITED, this.onOrderComplited, this);
 		cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
+        cc.systemEvent[func](GameEvent.HELP_PAGE_OFF, this.onHelpPageOff, this);
+        
+
 	},
 
     onPotionWasted() {
@@ -82,6 +85,10 @@ cc.Class({
         this.scheduleOnce(() => {
             this._addNewVisitor();
         }, 6 + Math.random() * 2);
+    },
+
+    onHelpPageOff() {
+        cc.systemEvent.emit(GameEvent.START_TIMER);
     }
 
     // update (dt) {},
