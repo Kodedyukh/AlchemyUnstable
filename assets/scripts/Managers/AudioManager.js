@@ -68,5 +68,5 @@ cc.Class({
             cc.audioEngine.stop(currentTrack.id);
             this._tracks = this._tracks.filter(t => t !== currentTrack);
         }
-    }
+    },
 });
