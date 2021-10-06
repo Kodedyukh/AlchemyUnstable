@@ -3,7 +3,7 @@
   "_name": "potion_rotate",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1,
+  "_duration": 0.75,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -15,23 +15,23 @@
           "value": 0
         },
         {
-          "frame": 0.25,
+          "frame": 0.21666666666666667,
           "value": 30
         },
         {
-          "frame": 0.5,
+          "frame": 0.4,
           "value": -30
         },
         {
-          "frame": 0.6666666666666666,
+          "frame": 0.5333333333333333,
           "value": 60
         },
         {
-          "frame": 0.8333333333333334,
+          "frame": 0.65,
           "value": -60
         },
         {
-          "frame": 1,
+          "frame": 0.75,
           "value": 63
         }
       ]

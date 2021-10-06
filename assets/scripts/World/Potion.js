@@ -72,6 +72,10 @@ cc.Class({
 			type: cc.Prefab
 		},
 
+		velocityThreshold: {
+			default: 100
+		},
+
 		holder: { default: null, visible: false },
 		orderIndex: { default: null, visible: false },
 
@@ -91,6 +95,7 @@ cc.Class({
 
 		this._animation = this.renderNode.getComponent(cc.Animation);
 		this._collider = this.getComponent(cc.PhysicsCircleCollider);
+		this._body = this.getComponent(cc.RigidBody);
 		
 		//this._effectNode.opacity = 0;
 		this.renderNode.opacity = 0;
@@ -152,6 +157,10 @@ cc.Class({
 			effect.setPosition(localPos);
 		}
 
+		if (this.touchEffect) {
+			this.touchEffect.stopSystem();
+		}
+
 		this.holder.setPotionType(PotionTypes.None);
 
 		cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Glass);
@@ -188,7 +197,15 @@ cc.Class({
 				cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Cat);
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
-					this._launchExplodeTimer();
+
+					const speed = this._body.linearVelocity.mag();
+
+					if (speed > this.velocityThreshold) {
+						this._destroy();
+					} else {
+						this._launchExplodeTimer();	
+					}
+					
 				}
 				
 			} break;

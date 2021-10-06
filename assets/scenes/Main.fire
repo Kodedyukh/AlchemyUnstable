@@ -224,8 +224,8 @@
     "rightButton": "d",
     "useButton": "e",
     "runButton": "shift",
-    "rotateClockwiseButton": "right",
-    "rotateCounterclockButton": "left",
+    "rotateClockwiseButton": "left",
+    "rotateCounterclockButton": "right",
     "pushPotionButton": "up",
     "pullPotionButton": "down",
     "_topButtonPressed": false,
@@ -25223,6 +25223,7 @@
     "bottleDropPrefab": {
       "__uuid__": "7221761a-fbf3-40b1-b38e-c38b90ae109f"
     },
+    "velocityThreshold": 150,
     "holder": null,
     "orderIndex": null,
     "_N$type": 0,
@@ -25285,8 +25286,8 @@
         0,
         0,
         1,
-        0.5,
-        0.5,
+        0.7,
+        0.7,
         0.5
       ]
     },
@@ -25944,7 +25945,7 @@
     },
     "_enabled": true,
     "tag": 0,
-    "_density": 0.1,
+    "_density": 0.05,
     "_sensor": true,
     "_friction": 0.2,
     "_restitution": 0,
@@ -25954,7 +25955,7 @@
       "x": 0,
       "y": 0
     },
-    "_radius": 12,
+    "_radius": 14,
     "_id": "0eG6D8qHVDzZ/eNLRhqsiL"
   },
   {
@@ -26759,8 +26760,9 @@
     "_enabled": true,
     "runVelocity": 200,
     "walkVelocity": 100,
-    "rotationVelocity": 120,
-    "potionSpeed": 25,
+    "rotationVelocity": 200,
+    "rotationVelocityWithPotion": 100,
+    "potionSpeed": 120,
     "potionDistanceMax": 300,
     "interactionMark": {
       "__id__": 758

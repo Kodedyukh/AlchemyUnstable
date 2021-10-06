@@ -22,6 +22,7 @@ cc.Class({
 		runVelocity: 100,
 		walkVelocity: 100,
 		rotationVelocity: 0,
+		rotationVelocityWithPotion: 0,
 		potionSpeed: 10,
 		potionDistanceMax: 300,
 		interactionMark: {
@@ -70,10 +71,12 @@ cc.Class({
 
 		_isRunning: {default: false, serializable: false},
 		_rotationDirection: {default: 0, serializable: false},
+		_currentRotationVelocity: {default: 0, serializable: false},
 		_potionVelocity: {default: 0, serializable: false},
 
 		_bodyRender: { default: null, serializable: false },
 		_potionRender: { default: null, serializable: false },
+
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -128,6 +131,9 @@ cc.Class({
 
             	this._joint.connectedAnchor = cc.v2(Math.max(Math.min(-20, newDistance), - this.potionDistanceMax), 0);
             	this._joint.apply();
+
+            	this._potionVelocity = this._potionVelocity > 0? Math.min(1.06 * this._potionVelocity, this.potionSpeed):
+            		Math.max(1.06 * this._potionVelocity, - this.potionSpeed);
             }
 
 			if (this._potionRender) {
@@ -208,7 +214,11 @@ cc.Class({
         // this._body.angularVelocity = 0;
 
         // for arrows
-        this._body.angularVelocity = this.rotationVelocity * this._rotationDirection;
+        this._body.angularVelocity = this._currentRotationVelocity * this._rotationDirection;
+
+        const limitVelocity = this._potion.type !== PotionTypes.None? this.rotationVelocityWithPotion: this.rotationVelocity;
+
+        this._currentRotationVelocity = Math.min(1.08 * this._currentRotationVelocity, limitVelocity);
     },
 
 	onLeftButtonPressed() {
@@ -341,14 +351,22 @@ cc.Class({
 
 	onRotateButtonPressed(direction) {
 		this._rotationDirection += direction;
+
+		if (this._rotationDirection !== 0) {
+			this._currentRotationVelocity = this.rotationVelocity * 0.1
+		}
 	},
 
 	onRotateButtonReleased(direction) {
 		this._rotationDirection -= direction;
+
+		if (this._rotationDirection !== 0) {
+			this._currentRotationVelocity = this.rotationVelocity * 0.1
+		}
 	},
 
 	onPullButtonPressed() {
-		this._potionVelocity = this.potionSpeed;
+		this._potionVelocity = 0.1 * this.potionSpeed;
 	},
 
 	onPullButtonReleased() {
@@ -356,7 +374,7 @@ cc.Class({
 	},
 
 	onPushButtonPressed() {
-		this._potionVelocity = - this.potionSpeed;
+		this._potionVelocity = - 0.1 * this.potionSpeed;
 	},
 
 	onPushButtonReleased() {
