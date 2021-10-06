@@ -27,7 +27,7 @@ cc.Class({
 		_pullPotionPressed: false,
 
 		_helpPageOn: true,
-
+		_isGameOver: false,
 
         coolDownTime: {
             default: 2,
@@ -41,6 +41,7 @@ cc.Class({
 	onLoad () {
 		cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
 		cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+		cc.systemEvent.on(GameEvent.GAME_OVER, this.onGameOver, this);
 
 		this.scheduleOnce(() => {
 			this._isCool = true;
@@ -56,6 +57,11 @@ cc.Class({
 	onKeyDown: function (event) {
 
 		if (this._helpPageOn) return;
+
+		if (this._isGameOver && (cc.macro.KEY[this.useButton] === event.keyCode)) {
+			cc.audioEngine.stopAll();
+			cc.director.loadScene("Main");
+		} else if (this._isGameOver) return;
 
 		switch(event.keyCode) {
 
@@ -251,5 +257,9 @@ cc.Class({
 
 		}
 		
+	},
+
+	onGameOver: function () {
+		this._isGameOver = true;
 	}
 });
