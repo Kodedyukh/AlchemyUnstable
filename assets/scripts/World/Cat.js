@@ -2,16 +2,7 @@ import CollisionGroups from 'CollisionGroups';
 import GameEvent from 'GameEvent';
 import AudioTypes from 'AudioTypes';
 
-const CatDirections = [
-    cc.v2(0, 1),
-    cc.v2(1, 0),
-    cc.v2(0, -1),
-    cc.v2(-1, 0),
-    cc.v2(1, 1),
-    cc.v2(1, -1),
-    cc.v2(-1, 1),
-    cc.v2(-1, -1),
-];
+const CatDirections = [cc.v2(0, 1), cc.v2(1, 0), cc.v2(0, -1), cc.v2(-1, 0), cc.v2(1, 1), cc.v2(1, -1), cc.v2(-1, 1), cc.v2(-1, -1)];
 
 cc.Class({
     extends: cc.Component,
@@ -50,7 +41,7 @@ cc.Class({
     },
 
     update(dt) {
-        if (this._isMoveEnable) { 
+        if (this._isMoveEnable) {
             this._movingTimer += dt;
 
             if (this._body && this._currentMoveVector) {
@@ -73,7 +64,7 @@ cc.Class({
             }
         } else {
             this._rageTestTimer += dt;
-            
+
             if (this._rageTestTimer > this.rageTestCoolDown) {
                 if (Math.random() * 100 < this.rageChance) {
                     this._rageMode = true;
@@ -91,7 +82,7 @@ cc.Class({
     },
 
     _setDirection(direction) {
-        const directionAngle = Math.atan2(direction.y, direction.x) * 180 / Math.PI;
+        const directionAngle = (Math.atan2(direction.y, direction.x) * 180) / Math.PI;
 
         if (this.node.angle !== directionAngle) {
             this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
@@ -105,7 +96,7 @@ cc.Class({
                     this._collider.width = this._collider.height;
                     this._collider.height = tmp;
                     this._collider.apply();
-                    
+
                     this._calculateNewDirection();
                 } else {
                     this._currentMoveVector = direction;
@@ -122,7 +113,7 @@ cc.Class({
         const minValue = value - 0.5;
         const maxValue = value + 0.5;
 
-        const currentValue = minValue + Math.random() * (maxValue - minValue); 
+        const currentValue = minValue + Math.random() * (maxValue - minValue);
 
         return currentValue;
     },
@@ -132,14 +123,15 @@ cc.Class({
         this.skeleton.timeScale = 1;
         this._currentAnimation = this.skeleton.setAnimation(0, 'idle', true);
 
-        const validDirections = CatDirections.filter(d => d.x !== this._currentDirection.x && d.y !== this._currentDirection.y);
+        const validDirections = CatDirections.filter((d) => d.x !== this._currentDirection.x && d.y !== this._currentDirection.y);
         this._currentDirection = validDirections[Math.round((validDirections.length - 1) * Math.random())];
-        const reverseCurrentDirection = this._currentDirection;//this._currentDirection.neg();
+        const reverseCurrentDirection = this._currentDirection; //this._currentDirection.neg();
 
-        this.scheduleOnce(()=>{
+        this.scheduleOnce(() => {
             this._body.linearVelocity = cc.Vec2.ZERO;
             this._setDirection(
-                cc.v2(this._getRandomValue(reverseCurrentDirection.x), this._getRandomValue(reverseCurrentDirection.y)).normalizeSelf());
+                cc.v2(this._getRandomValue(reverseCurrentDirection.x), this._getRandomValue(reverseCurrentDirection.y)).normalizeSelf()
+            );
         }, 1);
     },
 
@@ -149,40 +141,39 @@ cc.Class({
         if (self.tag === 0) {
             if (!this._collider) this._collider = self;
 
-            switch(otherGroupName){
+            switch (otherGroupName) {
                 case CollisionGroups.Wall:
                 case CollisionGroups.PotionFactory:
-                    
+                case CollisionGroups.CatLimit:
                     this._isColliding = true;
                     if (this._isMoveEnable) this._calculateNewDirection();
 
                     break;
 
-                    case CollisionGroups.Alchemist:
-                        cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Cat);
-                        break;
+                case CollisionGroups.Alchemist:
+                    cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.Cat);
+                    break;
 
-                default: 
+                default:
                     break;
             }
         }
-    },  
+    },
 
     onEndContact(contact, self, other) {
         const otherGroupName = other.node.group;
 
         if (self.tag === 0) {
-            switch(otherGroupName){
+            switch (otherGroupName) {
                 case CollisionGroups.Wall:
                 case CollisionGroups.PotionFactory:
-                    
                     this._isColliding = false;
 
                     break;
 
-                default: 
+                default:
                     break;
             }
         }
-    }
+    },
 });

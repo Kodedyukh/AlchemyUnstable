@@ -8,14 +8,14 @@ cc.Class({
 
     properties: {
         potionType: { default: PotionTypes.None, type: PotionTypes },
-        _hasPotions: { default: false, serializable: false }
+        _hasPotions: { default: false, serializable: false },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
-    start () {
+    start() {
         this._hasPotions = this.potionType !== PotionTypes.None;
     },
 
@@ -25,7 +25,7 @@ cc.Class({
         if (this._hasPotions && !initiator.hasPotion()) {
             initiator.setPotionType(this.potionType);
             cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.PutBottle);
-            initiator.interactionAreas = initiator.interactionAreas.filter(a => a !== this);
+            initiator.interactionAreas = initiator.interactionAreas.filter((a) => a !== this);
         }
-    }
+    },
 });

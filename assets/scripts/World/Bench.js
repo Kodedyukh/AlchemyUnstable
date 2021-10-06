@@ -229,6 +229,10 @@ cc.Class({
         callback instanceof Function && callback(result);
     },
 
+    onGetCurrentOrderIndex(callback) {
+        callback instanceof Function && callback(this._currentOrder);
+    },
+
     onOrderOutOfTime() {
         this._nextOrder();
     },
@@ -239,10 +243,6 @@ cc.Class({
 
     onPotionCrashed() {
         this._nextOrder();
-    },
-
-    onGetCurrentOrderIndex(callback) {
-        callback instanceof Function && callback(this._currentOrder);
     },
 
     onGameOver() {

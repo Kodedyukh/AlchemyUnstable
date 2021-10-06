@@ -39,6 +39,8 @@ cc.Class({
         _isActive: { default: true, serializable: false },
         _animation: { default: null, serializable: false },
         _baseTurning: { default: null, serializable: false },
+
+        _recipeAnnounceTimer: { default: -1, serializable: false },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -72,6 +74,14 @@ cc.Class({
             this._baseTurning.trackTime = (angle / 360) * 2;
         } else {
             this.node.angle = this.rotator.angle;
+        }
+
+        if (this._recipeAnnounceTimer > -1) {
+            this._recipeAnnounceTimer += dt;
+            if (this._recipeAnnounceTimer > 3) {
+                this.stopInstantInteract();
+                this._recipeAnnounceTimer = -1;
+            }
         }
     },
 
@@ -141,6 +151,10 @@ cc.Class({
     stopInteract(initiator) {},
 
     instantInteract() {
+        if (this._recipeAnnounceTimer > 0) {
+            this._recipeAnnounceTimer = -1;
+        }
+
         cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients) => {
             cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node.position, ingridients);
         });
@@ -159,6 +173,7 @@ cc.Class({
         cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
         cc.systemEvent[func](GameEvent.MOVE_VISITORS, this.onMoveVisitors, this);
         cc.systemEvent[func](GameEvent.GAME_OVER, this.onGameOver, this);
+        cc.systemEvent[func](GameEvent.START_TIMER, this.onStartTimer, this);
     },
 
     onPotionWasted() {
@@ -183,5 +198,19 @@ cc.Class({
 
     onGameOver() {
         this._isActive = false;
+    },
+
+    onStartTimer() {
+        cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER_INDEX, (index) => {
+            if (this.visitorIndex === index) {
+                cc.systemEvent.emit(GameEvent.GET_CHARACTER_HALL_STATE, (isInHall) => {
+                    if (isInHall) {
+                        cc.log('announce recipe');
+                        this.instantInteract();
+                        this._recipeAnnounceTimer = 0;
+                    }
+                });
+            }
+        });
     },
 });

@@ -53,6 +53,9 @@ export default cc.Enum({
     //Visitors
     MOVE_VISITORS: 6000,
 
+    //Character
+    GET_CHARACTER_HALL_STATE: 7000,
+
     //Ui
     HP_MINUS: 10000,
     GAME_OVER: 10001,
