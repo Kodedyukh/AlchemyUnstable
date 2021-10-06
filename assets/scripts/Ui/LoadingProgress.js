@@ -18,8 +18,11 @@ cc.Class({
             if (totalCount > 0) {
                 percent = (100 * completedCount) / totalCount;
             }
-            this.render.width = Math.round(percent) * 2;
-            this.indicator.x = -100 + Math.round(percent) * 2;
+
+            if (this.render && this.indicator) {
+                this.render.width = Math.round(percent) * 2;
+                this.indicator.x = -100 + Math.round(percent) * 2;
+            }
         };
     },
 
