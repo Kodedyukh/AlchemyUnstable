@@ -23910,7 +23910,7 @@
     },
     "_enabled": true,
     "unstableDuration": 60,
-    "unstableChance": 10,
+    "unstableChance": 0,
     "orders": [
       {
         "__id__": 677
