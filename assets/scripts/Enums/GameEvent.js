@@ -26,7 +26,7 @@ export default cc.Enum({
 
     //Pause
     TOGGLE_PAUSE: 1301,
-    
+
     //Sound
     SOUND_ACTIVE: 1500,
     PLAY_AUDIO: 1501,
@@ -49,6 +49,9 @@ export default cc.Enum({
 
     //Timer
     START_TIMER: 5000,
+
+    //Visitors
+    MOVE_VISITORS: 6000,
 
     //Ui
     HP_MINUS: 10000,

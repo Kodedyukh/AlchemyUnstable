@@ -6,17 +6,18 @@ cc.Class({
 
     properties: {
         visitorPrefab: { default: null, type: cc.Prefab },
-        
+
         _visitorCount: { default: 0, serializable: false },
+        _isActive: { default: true, serializable: false },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad() {
         this.node.children.forEach((ch) => {
             ch.destroy();
         });
-        
+
         const visitor = cc.instantiate(this.visitorPrefab);
         visitor.setParent(this.node);
         visitor.setPosition(cc.v2(-270, -132));
@@ -27,41 +28,38 @@ cc.Class({
         visitorComp.rotator.angle = 90;
 
         this._handleSubscription(true);
-
-        // this.scheduleOnce(() => {
-        //     cc.systemEvent.emit(GameEvent.START_TIMER);
-        // }, 3.5);
     },
 
-    start () {
+    start() {
         this.onOrderComplited();
     },
 
     _addNewVisitor() {
-        const visitor = cc.instantiate(this.visitorPrefab);
-        visitor.setParent(this.node);
-        visitor.setPosition(cc.v2(-410, 350));
+        if (this._isActive) {
+            const visitor = cc.instantiate(this.visitorPrefab);
+            visitor.setParent(this.node);
+            visitor.setPosition(cc.v2(-410, 350));
 
-        const visitorComp = visitor.getComponent(Visitor);
-        visitorComp.visitorIndex = this._visitorCount++;
-        visitorComp.status = 0;
+            const visitorComp = visitor.getComponent(Visitor);
+            visitorComp.visitorIndex = this._visitorCount++;
+            visitorComp.status = 0;
 
-        this.scheduleOnce(() => {
-            visitorComp.getComponent(Visitor).changeStatus();
-        });
+            this.scheduleOnce(() => {
+                visitorComp.getComponent(Visitor).changeStatus();
+            });
+        }
     },
 
-	_handleSubscription(isOn) {
-		const func = isOn ? 'on' : 'off';
+    _handleSubscription(isOn) {
+        const func = isOn ? 'on' : 'off';
 
-		cc.systemEvent[func](GameEvent.POTION_WASTED, this.onPotionWasted, this);
-		cc.systemEvent[func](GameEvent.POTION_CRASHED, this.onPotionCrashed, this);
-		cc.systemEvent[func](GameEvent.ORDER_COMPLITED, this.onOrderComplited, this);
-		cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
+        cc.systemEvent[func](GameEvent.POTION_WASTED, this.onPotionWasted, this);
+        cc.systemEvent[func](GameEvent.POTION_CRASHED, this.onPotionCrashed, this);
+        cc.systemEvent[func](GameEvent.ORDER_COMPLITED, this.onOrderComplited, this);
+        cc.systemEvent[func](GameEvent.ORDER_OUT_OF_TIME, this.onOrderOutOfTime, this);
         cc.systemEvent[func](GameEvent.HELP_PAGE_OFF, this.onHelpPageOff, this);
-        
-
-	},
+        cc.systemEvent[func](GameEvent.GAME_OVER, this.onGameOver, this);
+    },
 
     onPotionWasted() {
         this.scheduleOnce(() => {
@@ -89,7 +87,10 @@ cc.Class({
 
     onHelpPageOff() {
         cc.systemEvent.emit(GameEvent.START_TIMER);
-    }
+    },
 
-    // update (dt) {},
+    onGameOver() {
+        this._isActive = false;
+        cc.systemEvent.emit(GameEvent.MOVE_VISITORS);
+    },
 });
