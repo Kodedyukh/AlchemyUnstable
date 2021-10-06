@@ -4,6 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+    	firstTimer: {default: 240},
         timeForTimer: { default: 60, type: cc.Integer },
         startColor: cc.Color.WHITE,
         endColor: cc.Color.WHITE,
@@ -13,6 +14,7 @@ cc.Class({
 
         _tween: { default: null, serializable: false },
         _isActive: { default: true, serializable: false },
+        _isFirstTimer: {default: true, serializable: false}
     },
 
     onLoad() {
@@ -60,6 +62,8 @@ cc.Class({
         this.node.opacity = 0;
         this.node.active = true;
 
+        if (this._isFirstTimer) this._isFirstTimer = false;
+
         cc.tween(this.node).to(0.5, { opacity: 255 }).start();
     },
 
@@ -89,12 +93,15 @@ cc.Class({
 
     onStartTimer() {
         if (this.render && this._isActive) {
+
+        	const timerDuration = this._isFirstTimer? this.firstTimer: this.timeForTimer;
+
             this._tween = cc.tween(this.render);
             this._tween
                 .call(() => {
                     this._startCallback();
                 })
-                .to(this.timeForTimer, { fillRange: 0 })
+                .to(timerDuration, { fillRange: 0 })
                 .call(() => {
                     this._endCallback();
                 })

@@ -101,7 +101,7 @@ cc.Class({
 
         initiator.setPotionType(PotionTypes.None);
         initiator.interactionAreas = initiator.interactionAreas.filter((a) => a !== this);
-        cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.BottleScratch);
+        cc.systemEvent.emit(GameEvent.PLAY_AUDIO, AudioTypes.PutBottle);
 
         if (!this._isUnstable) {
             if (this._isActive && !this._isWaitiningForOrder) {

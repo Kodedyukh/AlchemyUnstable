@@ -76,6 +76,10 @@ cc.Class({
 			default: 100
 		},
 
+		contactCooldown: {
+			default: 0.05
+		},
+
 		holder: { default: null, visible: false },
 		orderIndex: { default: null, visible: false },
 
@@ -84,7 +88,9 @@ cc.Class({
 
 		_animation: {default: null, serializable: false},
 		_collider: {default: null, serializable: false},
-		_tween: {default: null, serializable: false}
+		_tween: {default: null, serializable: false},
+
+		_inContact: {default: false, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -203,6 +209,7 @@ cc.Class({
 					if (speed > this.velocityThreshold) {
 						this._destroy();
 					} else {
+						this._inContact = true;
 						this._launchExplodeTimer();	
 					}
 					
@@ -235,7 +242,12 @@ cc.Class({
 			case CollisionGroups.Cat:
 			case CollisionGroups.Wall: {
 				if (this.type != PotionTypes.None) {
-					this._stopExplodeTimer();
+					this._inContact = false;
+
+					this.scheduleOnce(() => {
+						if (!this._inContact) this._stopExplodeTimer();
+					}, this.contactCooldown)
+					
 				}
 			} break;
 		}
