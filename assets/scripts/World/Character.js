@@ -4,6 +4,7 @@ import InteractionArea from 'InteractionArea';
 import Potion from 'Potion';
 import PotionTypes from 'PotionTypes';
 import Visitor from 'Visitor';
+import AnimationController from 'AnimationController';
 
 const PlayerInputsHelper = cc.Class({
     name: 'PlayerInputsHelper',
@@ -13,6 +14,10 @@ const PlayerInputsHelper = cc.Class({
         top: false,
         down: false,
         use: false,
+    },
+
+    isMoving() {
+        return this.left || this.right || this.down || this.top;
     },
 });
 
@@ -65,7 +70,8 @@ cc.Class({
         _isPinned: { default: false, serializable: false },
         _isPaused: { default: false, serializable: false },
 
-        _currentAnimation: { default: null, serializable: false },
+        _animationController: { default: false, serializable: false },
+        //_currentAnimation: { default: null, serializable: false },
         //_lastMousePosition: { default: null, serializable: false },
 
         //_realAngle: { default: 0, serializable: false },
@@ -73,6 +79,7 @@ cc.Class({
 
         _isSleepingPlayer: { default: false, serializable: false },
         _isInHall: { default: true, serializable: false },
+        _isMoving: { default: false, serializable: false },
 
         _isRunning: { default: false, serializable: false },
         _rotationDirection: { default: 0, serializable: false },
@@ -92,6 +99,7 @@ cc.Class({
         this._joint = this.getComponentInChildren(cc.Joint);
         this._animation = this.getComponentInChildren(cc.Animation);
         this._potion = this.getComponentInChildren(Potion);
+        this._animationController = this.getComponent(AnimationController);
 
         if (this._body) {
             this._body.onBeginContact = (c, s, o) => {
@@ -150,6 +158,11 @@ cc.Class({
                 const angle = ((this._body.node.angle % 360) + 360) % 360;
                 this._potionRender.zIndex = angle > 180 ? 6 : 4;
             }
+        }
+
+        if (this._isMoving !== this.inputs.isMoving()) {
+            this._isMoving = this.inputs.isMoving();
+            this._animationController.isMoving = this._isMoving;
         }
     },
 

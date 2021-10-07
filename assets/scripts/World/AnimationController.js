@@ -6,17 +6,18 @@ cc.Class({
         baseSkeleton: { default: null, type: sp.Skeleton },
         headSkeleton: { default: null, type: sp.Skeleton },
 
+        isMoving: { default: false, visible: false },
+
         _currentState: { default: null, serializable: false },
         _headTurning: { default: null, serializable: false },
-        _baseTurning: { default: null, serializable: false }
+        _baseTurning: { default: null, serializable: false },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
-    },
+    onLoad() {},
 
-    start () {
+    start() {
         if (this.baseSkeleton) {
             this._baseTurning = this.baseSkeleton.setAnimation(1, 'turn_360', true);
             this._baseTurning.timeScale = 0;
@@ -27,13 +28,12 @@ cc.Class({
         }
     },
 
-    switchAnimation(name) {
-    },
+    switchAnimation(name) {},
 
-    update (dt) {
+    update(dt) {
         if (this.body) {
-            const isMoving = this.body.linearVelocity.x !== 0 || this.body.linearVelocity.y !== 0;
-            if (isMoving) {
+            //const isMoving = this.body.linearVelocity.x !== 0 || this.body.linearVelocity.y !== 0;
+            if (this.isMoving) {
                 if (this._currentState !== 'run') {
                     this._currentState = 'run';
                     this.baseSkeleton && this.baseSkeleton.setAnimation(0, 'run', true);
@@ -47,15 +47,14 @@ cc.Class({
                 }
             }
 
-        
-            if (this._headTurning) { 
-                const headAngle = (this.body.node.angle % 360 + 360) % 360;
-                this._headTurning.trackTime = headAngle / 360 * 2 + .5;
+            if (this._headTurning) {
+                const headAngle = ((this.body.node.angle % 360) + 360) % 360;
+                this._headTurning.trackTime = (headAngle / 360) * 2 + 0.5;
             }
 
-            if (isMoving && this._baseTurning) {
-                const baseAngle = Math.atan2(this.body.linearVelocity.x, this.body.linearVelocity.y) * 180 / Math.PI;
-                this._baseTurning.trackTime = ((360 - (360 + baseAngle) % 360 + 180) % 360) / 360  * 2;
+            if (this.isMoving && this._baseTurning) {
+                const baseAngle = (Math.atan2(this.body.linearVelocity.x, this.body.linearVelocity.y) * 180) / Math.PI;
+                this._baseTurning.trackTime = (((360 - ((360 + baseAngle) % 360) + 180) % 360) / 360) * 2;
             }
         }
     },

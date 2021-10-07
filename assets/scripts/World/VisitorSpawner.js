@@ -6,6 +6,7 @@ cc.Class({
 
     properties: {
         visitorPrefab: { default: null, type: cc.Prefab },
+        spawnTo: { default: null, type: cc.Node },
 
         _visitorCount: { default: 0, serializable: false },
         _isActive: { default: true, serializable: false },
@@ -19,7 +20,7 @@ cc.Class({
         });
 
         const visitor = cc.instantiate(this.visitorPrefab);
-        visitor.setParent(this.node);
+        visitor.setParent(this.spawnTo || this.node);
         visitor.setPosition(cc.v2(-270, -132));
 
         const visitorComp = visitor.getComponent(Visitor);
@@ -37,7 +38,7 @@ cc.Class({
     _addNewVisitor() {
         if (this._isActive) {
             const visitor = cc.instantiate(this.visitorPrefab);
-            visitor.setParent(this.node);
+            visitor.setParent(this.spawnTo || this.node);
             visitor.setPosition(cc.v2(-410, 350));
 
             const visitorComp = visitor.getComponent(Visitor);

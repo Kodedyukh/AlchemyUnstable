@@ -43,10 +43,13 @@
       },
       {
         "__id__": 16
+      },
+      {
+        "__id__": 17
       }
     ],
     "_prefab": {
-      "__id__": 17
+      "__id__": 18
     },
     "_opacity": 255,
     "_color": {
@@ -58,8 +61,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 40,
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -446,6 +449,21 @@
       "default"
     ],
     "useSpineRotation": true
+  },
+  {
+    "__type__": "e0a88P06dtMAJovcvzogkhU",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "zIndex": 0,
+    "custom": true,
+    "targetNode": null,
+    "offset": -18,
+    "_N$dynamic": true,
+    "_id": ""
   },
   {
     "__type__": "cc.RigidBody",
