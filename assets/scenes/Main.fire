@@ -25415,7 +25415,7 @@
     },
     "_enabled": true,
     "firstTimer": 240,
-    "timeForTimer": 200,
+    "timeForTimer": 240,
     "startColor": {
       "__type__": "cc.Color",
       "r": 43,
@@ -27805,9 +27805,9 @@
     },
     "_enabled": true,
     "runVelocity": 200,
-    "walkVelocity": 100,
-    "rotationVelocity": 200,
-    "rotationVelocityWithPotion": 100,
+    "walkVelocity": 120,
+    "rotationVelocity": 300,
+    "rotationVelocityWithPotion": 140,
     "potionSpeed": 120,
     "potionDistanceMax": 300,
     "interactionMark": {
