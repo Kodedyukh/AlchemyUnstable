@@ -156,7 +156,7 @@ cc.Class({
         }
 
         cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients) => {
-            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node.position, ingridients);
+            cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node, ingridients);
         });
     },
 

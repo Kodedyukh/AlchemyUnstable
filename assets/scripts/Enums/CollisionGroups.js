@@ -9,4 +9,5 @@ export default cc.Enum({
     Cat: 'cat',
     CatLimit: 'catLimit',
     Hall: 'hall',
+    Table: 'table',
 });

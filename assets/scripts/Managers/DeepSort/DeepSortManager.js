@@ -38,7 +38,7 @@ cc.Class({
         const worldPosition = node.parent.convertToWorldSpaceAR(node);
         node.setParent(this.node);
         node.setPosition(this.node.convertToNodeSpaceAR(worldPosition));
-        node.zIndex = -(worldPosition.y - (node.height / 2) * (node.angle === 0 ? 1 : -1));
+        node.zIndex = -Math.round(worldPosition.y - node.height / 2); // * (node.angle === 0 ? 1 : -1));
     },
 
     // update (dt) {},

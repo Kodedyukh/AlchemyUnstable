@@ -154,7 +154,7 @@ cc.Class({
                         : Math.max(1.06 * this._potionVelocity, -this.potionSpeed);
             }
 
-            if (this._potionRender) {
+            if (this._potionRender && this._potionRender.isChildOf(this.node)) {
                 const angle = ((this._body.node.angle % 360) + 360) % 360;
                 this._potionRender.zIndex = angle > 180 ? 6 : 4;
             }

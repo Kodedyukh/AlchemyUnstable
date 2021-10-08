@@ -91,20 +91,20 @@ cc.Class({
         cc.tween(this.node)
             .to(1, { angle: directionAngle })
             .call(() => {
-                if (this._isColliding && this._collider) {
+                /*if (this._isColliding && this._collider) {
                     const tmp = this._collider.width;
                     this._collider.width = this._collider.height;
                     this._collider.height = tmp;
                     this._collider.apply();
 
                     this._calculateNewDirection();
-                } else {
-                    this._currentMoveVector = direction;
-                    this._isMoveEnable = true;
+                } else {*/
+                this._currentMoveVector = direction;
+                this._isMoveEnable = true;
 
-                    this.skeleton.timeScale = this._rageMode ? 2 : 1;
-                    this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
-                }
+                this.skeleton.timeScale = this._rageMode ? 2 : 1;
+                this._currentAnimation = this.skeleton.setAnimation(0, 'run', true);
+                //}
             })
             .start();
     },
@@ -145,6 +145,7 @@ cc.Class({
                 case CollisionGroups.Wall:
                 case CollisionGroups.PotionFactory:
                 case CollisionGroups.CatLimit:
+                case CollisionGroups.Table:
                     this._isColliding = true;
                     if (this._isMoveEnable) this._calculateNewDirection();
 

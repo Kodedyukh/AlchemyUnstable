@@ -137,12 +137,7 @@ cc.Class({
             const deliveredIngredients = currentOrder.ingridients.filter((i) => i._isDelivered);
 
             if (deliveredIngredients.length) {
-                cc.systemEvent.emit(
-                    GameEvent.SHOW_BUBBLE,
-                    this.node.parent.convertToWorldSpaceAR(this.node),
-                    deliveredIngredients,
-                    cc.Vec2.ZERO
-                );
+                cc.systemEvent.emit(GameEvent.SHOW_BUBBLE, this.node, deliveredIngredients);
             }
         }
     },

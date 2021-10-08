@@ -3,6 +3,7 @@ import InteractionArea from 'InteractionArea';
 import PotionTypes from 'PotionTypes';
 import GameEvent from 'GameEvent';
 import AudioTypes from 'AudioTypes';
+import DeepSortHelper from 'DeepSortHelper';
 
 const PotionTypeRender = cc.Class({
     name: 'PotionTypeRender',
@@ -102,7 +103,6 @@ cc.Class({
         this._collider = this.getComponent(cc.PhysicsCircleCollider);
         this._body = this.getComponent(cc.RigidBody);
 
-        //this._effectNode.opacity = 0;
         this.renderNode.opacity = 0;
 
         if (this._animation) {
@@ -116,8 +116,6 @@ cc.Class({
 
     shakeEnd() {
         this._destroy();
-        //this.renderNode.setPosition(cc.v2());
-        //this.renderNode.angle = 0;
     },
 
     _launchExplodeTimer() {
@@ -127,8 +125,6 @@ cc.Class({
         if (this.touchEffect) {
             this.touchEffect.resetSystem();
         }
-
-        //this.scheduleOnce(this._destroy, 1.5);
     },
 
     _stopExplodeTimer() {
@@ -138,11 +134,6 @@ cc.Class({
         if (this.touchEffect) {
             this.touchEffect.stopSystem();
         }
-
-        //this.renderNode.setPosition(cc.v2());
-        //this.renderNode.angle = 0;
-
-        //this.unschedule(this._destroy);
     },
 
     _destroy() {
@@ -174,6 +165,13 @@ cc.Class({
         cc.systemEvent.emit(GameEvent.STOP_AUDIO, AudioTypes.BottleScratch);
     },
 
+    _operateCoverMode(isActive, node) {
+        if (this.renderNode) {
+            const deepSortHelper = this.renderNode.getComponent(DeepSortHelper);
+            deepSortHelper && deepSortHelper.setCoverMode(isActive, node);
+        }
+    },
+
     onBeginContact(contact, self, other) {
         if (this.type === PotionTypes.None) return;
 
@@ -187,6 +185,8 @@ cc.Class({
                             this.holder.interactionAreas = this.holder.interactionAreas.concat(interact);
                         }
                     }
+
+                    this._operateCoverMode(true, other.node);
                 }
                 break;
             case CollisionGroups.Visitor:
@@ -200,8 +200,10 @@ cc.Class({
                 }
                 break;
 
-            case CollisionGroups.Alchemist:
+            //case CollisionGroups.Alchemist:
             case CollisionGroups.PotionFactory:
+                contact.disabled = true;
+                this._operateCoverMode(true, other.node);
                 break;
 
             case CollisionGroups.Cat:
@@ -234,6 +236,8 @@ cc.Class({
                     if (interact) {
                         this.holder.interactionAreas = this.holder.interactionAreas.filter((a) => a !== interact);
                     }
+
+                    this._operateCoverMode(false);
                 }
                 break;
             case CollisionGroups.Visitor:
@@ -245,6 +249,11 @@ cc.Class({
                         }
                     }
                 }
+                break;
+
+            //case CollisionGroups.Alchemist:
+            case CollisionGroups.PotionFactory:
+                this._operateCoverMode(false);
                 break;
 
             case CollisionGroups.Cat:

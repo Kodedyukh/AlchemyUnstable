@@ -14,7 +14,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        //offset: { default: cc.v2(0, 50) },
         plusPrefab: { default: null, type: cc.Prefab },
         potions: { default: [], type: PotionRenderHelper },
         potionOffset: { default: cc.v2(20, 0) },
@@ -23,17 +22,22 @@ cc.Class({
         graphics: { default: null, type: cc.Graphics },
         shadowGraphics: { default: null, type: cc.Graphics },
 
+        _target: { default: null, serializable: false },
         _ingredientNodes: { default: null, serializable: false },
     },
 
     onEnable() {
         this._handleSubscription(true);
-
-        //this.node.opacity = 0;
     },
 
     onDisable() {
         this._handleSubscription(false);
+    },
+
+    update(dt) {
+        if (this._target) {
+            this.node.setPosition(this._target.parent.convertToWorldSpaceAR(this._target));
+        }
     },
 
     _handleSubscription(isOn) {
@@ -45,9 +49,6 @@ cc.Class({
 
     _setIngridients(ingridients) {
         ingridients.forEach((ingridient, index, array) => {
-            //const ingridientNode = new cc.Node('Ingridient');
-            //const ingridientSprite = ingridientNode.addComponent(cc.Sprite);
-
             const ingridientNode = cc.instantiate(this.plusPrefab);
             const ingridientSprite = ingridientNode.getChildByName('Render').getComponent(cc.Sprite);
 
@@ -121,8 +122,10 @@ cc.Class({
         this.shadowGraphics.lineTo(x + 5, y - 5);
     },
 
-    onShowBubble(position, ingridients, offset) {
-        this.node.setPosition(position.add(offset || cc.Vec2.ZERO)); //.add(this.offset));
+    onShowBubble(target, ingridients) {
+        this.node.setPosition(target.parent.convertToWorldSpaceAR(target));
+        this._target = target;
+
         this.node.opacity = 255;
 
         if (this._ingredientNodes) {
@@ -132,12 +135,12 @@ cc.Class({
         }
         this._ingredientNodes = [];
 
-        //cc.systemEvent.emit(GameEvent.GET_CURRENT_ORDER, (ingridients)=>{ this._setIngridients(ingridients) });
         this._setIngridients(ingridients);
         this._drawGraphics();
     },
 
     onHideBubble() {
+        this._target = null;
         this.node.opacity = 0;
     },
 });
