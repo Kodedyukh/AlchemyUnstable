@@ -40638,7 +40638,7 @@
         "__id__": 1275
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [],
     "_prefab": null,
     "_opacity": 255,
